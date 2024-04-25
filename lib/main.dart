@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sasmobile/frame.dart';
-
+import "package:sasmobile/theme.dart";
 void main() {
   runApp(const MainPage());
 }
@@ -16,7 +16,10 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: const MaterialThemeCustom(TextTheme()).light(),
+      darkTheme: const MaterialThemeCustom(TextTheme()).light(),
       home: Scaffold(
+
         body: Center(
           child: Frame(),
         ),
