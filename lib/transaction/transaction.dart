@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sasmobile/transaction/continue_button.dart';
 import 'package:sasmobile/transaction/partner.dart';
 import 'package:sasmobile/transaction/amount.dart';
 import 'package:sasmobile/transaction/toggle.dart';
@@ -26,6 +27,8 @@ class _TransactionPageState extends State<TransactionPage> {
           Partner(),
           Amount(),
           Spacer(),
+          ContinueButton(),
+          Spacer(),
           Toggle()
           
   ],
@@ -34,6 +37,8 @@ class _TransactionPageState extends State<TransactionPage> {
     );
   }
 }
+
+
 
 
 

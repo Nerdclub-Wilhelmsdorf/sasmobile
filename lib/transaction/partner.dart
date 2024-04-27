@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import "package:get/get.dart";
 import "package:sasmobile/transaction/toggle.dart";
 import "package:sasmobile/transaction/transaction.dart";
-
+RxString textPartner = "".obs;
 class Partner extends StatefulWidget {
   const Partner({
     super.key,
@@ -38,7 +38,11 @@ class TextFieldPartner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() => TextField(decoration: InputDecoration( border: OutlineInputBorder(), suffixIcon: Icon(Icons.account_circle_outlined), labelText: transactionType.value == TransactionType.expense ? 'Sender:' : 'Empfänger:'),));
+    return Obx(() => TextField(
+      onChanged: (value) {
+        textPartner.value = value;
+      },
+      decoration: InputDecoration( border: OutlineInputBorder(), suffixIcon: Icon(Icons.account_circle_outlined), labelText: transactionType.value == TransactionType.expense ? 'Sender:' : 'Empfänger:'),));
     //TextField(decoration: InputDecoration( border: OutlineInputBorder(), suffixIcon: Icon(Icons.account_circle_outlined), labelText: transactionType.value == TransactionType.expense ? 'Sender:' : 'Empfänger:'),);
   }
 }
