@@ -13,9 +13,6 @@ class TransactionPage extends StatefulWidget {
 }
 
 class _TransactionPageState extends State<TransactionPage> {
-  void _update() {
-    setState((){});
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,9 +26,7 @@ class _TransactionPageState extends State<TransactionPage> {
           Partner(),
           Amount(),
           Spacer(),
-          Padding(padding: EdgeInsets.only(bottom: 50),
-          child: Toggle(update: _update),
-          )
+          Toggle()
           
   ],
          

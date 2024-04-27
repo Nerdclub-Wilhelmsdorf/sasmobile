@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import "package:get/get.dart";
 import "package:sasmobile/transaction/toggle.dart";
 import "package:sasmobile/transaction/transaction.dart";
 
@@ -23,9 +24,21 @@ class _PartnerState extends State<Partner> {
           
           children: [SizedBox(
             width: MediaQuery.sizeOf(context).width * 0.70,
-            child: TextField(decoration: InputDecoration( border: OutlineInputBorder(), suffixIcon: Icon(Icons.account_circle_outlined), labelText: transactionType == TransactionType.expense ? 'Sender:' : 'Empfänger:'),)), SizedBox(
+            child:  TextFieldPartner()), SizedBox(
               child: IconButton(iconSize:30, color: Color(0xFF2F537D), onPressed: (){}, icon: Icon(Icons.qr_code)),)],
              ),
        );
+  }
+}
+
+class TextFieldPartner extends StatelessWidget {
+  const TextFieldPartner({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Obx(() => TextField(decoration: InputDecoration( border: OutlineInputBorder(), suffixIcon: Icon(Icons.account_circle_outlined), labelText: transactionType.value == TransactionType.expense ? 'Sender:' : 'Empfänger:'),));
+    //TextField(decoration: InputDecoration( border: OutlineInputBorder(), suffixIcon: Icon(Icons.account_circle_outlined), labelText: transactionType.value == TransactionType.expense ? 'Sender:' : 'Empfänger:'),);
   }
 }
