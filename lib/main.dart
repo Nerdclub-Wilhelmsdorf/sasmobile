@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:sasmobile/frame.dart';
+import 'package:sasmobile/initial/initial_screen.dart';
 import "package:sasmobile/theme.dart";
-void main() {
+
+void main() async{
+  await GetStorage.init();
   runApp(const MainPage());
 }
 
@@ -21,7 +25,7 @@ class _MainPageState extends State<MainPage> {
       home: Scaffold(
 
         body: Center(
-          child: Frame(),
+          child: isInitialStart() ? InitialScreen() : Frame(),
         ),
       ),
     );
