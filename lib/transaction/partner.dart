@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import "package:get/get.dart";
+import "package:qr_bar_code_scanner_dialog/qr_bar_code_scanner_dialog.dart";
 import "package:sasmobile/transaction/toggle.dart";
 import "package:sasmobile/transaction/transaction.dart";
 RxString textPartner = "".obs;
@@ -11,8 +12,9 @@ class Partner extends StatefulWidget {
   @override
   State<Partner> createState() => _PartnerState();
 }
-
+var PartnerController = TextEditingController();
 class _PartnerState extends State<Partner> {
+  var codescanner = QrBarCodeScannerDialog();
   @override
   Widget build(BuildContext context) {
     return 
@@ -22,10 +24,20 @@ class _PartnerState extends State<Partner> {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           
-          children: [SizedBox(
+          children: [
+            SizedBox(
             width: MediaQuery.sizeOf(context).width * 0.70,
             child:  TextFieldPartner()), SizedBox(
-              child: IconButton(iconSize:30, color: Color(0xFF2F537D), onPressed: (){}, icon: Icon(Icons.qr_code)),)],
+              child: IconButton(iconSize:30, color: Color(0xFF2F537D), onPressed: (){
+            codescanner.getScannedQrBarCode(
+            context: context,
+            onCode: (code){
+              if(code!.substring(0,2) == "w:") {
+                PartnerController.text = code.substring(2, code.length);
+              } 
+            });
+
+              }, icon: Icon(Icons.qr_code)),)],
              ),
        );
   }
@@ -42,7 +54,8 @@ class TextFieldPartner extends StatelessWidget {
       onChanged: (value) {
         textPartner.value = value;
       },
-      decoration: InputDecoration( border: OutlineInputBorder(), suffixIcon: Icon(Icons.account_circle_outlined), labelText: transactionType.value == TransactionType.expense ? 'Sender:' : 'Empfänger:'),));
+      controller: PartnerController,
+      decoration: InputDecoration( border: OutlineInputBorder(), suffixIcon: Icon(Icons.account_circle_outlined),  labelText: transactionType.value == TransactionType.expense ? 'Sender:' : 'Empfänger:'),));
     //TextField(decoration: InputDecoration( border: OutlineInputBorder(), suffixIcon: Icon(Icons.account_circle_outlined), labelText: transactionType.value == TransactionType.expense ? 'Sender:' : 'Empfänger:'),);
   }
 }
