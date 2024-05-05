@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:sasmobile/initial/continue_account_setup.dart';
 import 'package:sasmobile/initial/first_account.dart';
 import 'package:sasmobile/initial/first_account_pin.dart';
 import 'package:sasmobile/initial/welcome_text.dart';
@@ -28,23 +29,14 @@ class _InitialScreenState extends State<InitialScreen> {
             WelcomeText(),
             RegisterFirstAccount(),
             FirstAccountPin(),
-            Spacer(),
-            ContinueAccountSetup()
+            Spacer(flex: 4),
+            ContinueAccountSetup(),
+            Spacer()
         ],
       ));
   }
 }
 
-class ContinueAccountSetup extends StatelessWidget {
-  const ContinueAccountSetup({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Center();
-  }
-}
 
 
 

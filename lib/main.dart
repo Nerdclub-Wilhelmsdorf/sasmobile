@@ -3,7 +3,8 @@ import 'package:get_storage/get_storage.dart';
 import 'package:sasmobile/frame.dart';
 import 'package:sasmobile/initial/initial_screen.dart';
 import "package:sasmobile/theme.dart";
-
+const url = "https://saswdorf.de:8443";
+const token = "test";
 void main() async{
   await GetStorage.init();
   runApp(const MainPage());

@@ -1,5 +1,9 @@
 
 import 'package:flutter/material.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:sasmobile/initial/continue_account_setup.dart';
+import 'package:sasmobile/initial/verify_data.dart';
+var ValueAccount = "";
 
 class RegisterFirstAccount extends StatefulWidget {
   const RegisterFirstAccount({
@@ -42,6 +46,8 @@ class TextFieldAccount extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextField(
       onChanged: (value) {
+        ValueAccount = value;
+        canContinue.value  = verifyFields();
       },
       decoration: const InputDecoration( border: OutlineInputBorder(), suffixIcon: Icon(Icons.account_circle_outlined), labelText: "Konto"));
     //TextField(decoration: InputDecoration( border: OutlineInputBorder(), suffixIcon: Icon(Icons.account_circle_outlined), labelText: transactionType.value == TransactionType.expense ? 'Sender:' : 'Empfänger:'),);
