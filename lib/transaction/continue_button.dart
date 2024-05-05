@@ -1,8 +1,13 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:sasmobile/main.dart';
 import 'package:sasmobile/transaction/amount.dart';
 import 'package:sasmobile/transaction/partner.dart';
+import 'package:sasmobile/transaction/toggle.dart';
+import 'package:sasmobile/transaction/transaction.dart';
+import 'package:sasmobile/utils/pay.dart';
 class ContinueButton extends StatefulWidget {
   const ContinueButton({
     super.key,
@@ -31,7 +36,10 @@ class _ContinueButtonState extends State<ContinueButton> {
               child: FilledButton(onPressed: 
               isClickable() ? 
               (){
-                  
+                if(transactionType.value == TransactionType.expense){
+
+                  //var response = pay(id,textPartner.value, amountText.value, pin);
+                }
               }:
               null,child: Text("Weiter", textScaler: TextScaler.linear(1.4),))),
           ),
