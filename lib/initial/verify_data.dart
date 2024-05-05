@@ -1,4 +1,3 @@
-import 'dart:ffi';
 
 import 'package:sasmobile/initial/first_account.dart';
 import 'package:sasmobile/initial/first_account_pin.dart';

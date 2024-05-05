@@ -19,21 +19,23 @@ class InitialScreen extends StatefulWidget {
 class _InitialScreenState extends State<InitialScreen> {
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: MediaQuery.sizeOf(context).height,
-      width: MediaQuery.sizeOf(context).width,
-      child: const Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-            WelcomeText(),
-            RegisterFirstAccount(),
-            FirstAccountPin(),
-            Spacer(flex: 4),
-            ContinueAccountSetup(),
-            Spacer()
-        ],
-      ));
+    return Scaffold(
+      body: SizedBox(
+        height: MediaQuery.sizeOf(context).height,
+        width: MediaQuery.sizeOf(context).width,
+        child: const Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+              WelcomeText(),
+              RegisterFirstAccount(),
+              FirstAccountPin(),
+              Spacer(flex: 4),
+              ContinueAccountSetup(),
+              Spacer()
+          ],
+        )),
+    );
   }
 }
 

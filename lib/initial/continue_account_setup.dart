@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sasmobile/initial/first_account.dart';
 import 'package:sasmobile/initial/first_account_pin.dart';
-import 'package:sasmobile/initial/verify_data.dart';
+import 'package:sasmobile/transaction/transaction.dart';
+import 'package:sasmobile/utils/register_account.dart';
 import 'package:sasmobile/utils/verify_account.dart';
 var canContinue = false.obs;
 class ContinueAccountSetup extends StatelessWidget {
@@ -21,26 +22,36 @@ class ContinueAccountSetup extends StatelessWidget {
         if (response.data !="account verified"){
             showFailedDialog(response);
         }
+        else{
+          registerAccount(ValueAccount, ValueAccountPin);
+          Get.toNamed("/home");
+          Get.snackbar("Registrierung Erfolgreich!", "Viel Spaß mit der App!");
+        }
+
       } : null, child: Text("Weiter", style: TextStyle(fontSize: 18),))));
   }
 }
 
 void showFailedDialog(response) async{
+  print(response.data);
   switch(response.data){
     case "account suspended":
-          Get.defaultDialog(
-            title: "Welcome to Flutter Agency",
-            middleText: "We are the best Flutter App Development Company!",
-            backgroundColor: Colors.red,
-            titleStyle: TextStyle(color: Colors.white),
-            middleTextStyle: TextStyle(color: Colors.white),
-          );    case "account does not exist":
-      Get.defaultDialog(title: "Konto existiert nicht.");
+          Get.defaultDialog(title: "Fehler!",
+          middleText: "Ihr Konto wurde gesperrt. Versuchen Sie es später erneut." 
+          );    
+    case "account does not exist":
+      Get.defaultDialog(title: "Fehler!",
+      middleText: "Das Konto existiert nicht. Überprüfen Sie Ihre Eingaben."
+      );
     case "error verifying account":
-      Get.defaultDialog(title:  "Fehler!");
+      Get.defaultDialog(title:  "Fehler!",
+      middleText: "Es ist ein Fehler aufgetreten. Versuchen Sie es später erneut."
+      );
     case "failed to verify account":
-      Get.defaultDialog(title:"PIN nicht korrekt!");
+      Get.defaultDialog(title:"Fehler!",
+      middleText: "Falsche PIN. Überprüfen Sie Ihre Eingaben."
+      );
     default:
-      Get.defaultDialog(title: "Fehler!");
+      Get.defaultDialog(title: "Fehler!", middleText: "Es ist ein Fehler aufgetreten. Versuchen Sie es später erneut.");
   }
 }

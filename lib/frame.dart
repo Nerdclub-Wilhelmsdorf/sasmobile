@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sasmobile/account/account.dart';
+import 'package:sasmobile/display_qr/qr_page.dart';
+import 'package:sasmobile/initial/initial_screen.dart';
 import 'package:sasmobile/transaction/transaction.dart';
 
 class Frame extends StatefulWidget {
@@ -30,6 +32,7 @@ class _FrameState extends State<Frame> {
             icon: Icon(Icons.credit_card),
             label: 'Transaktionen',
           ),
+          NavigationDestination(icon: Icon(Icons.qr_code), label: "QR-Code"),
           NavigationDestination(
             icon: Icon(Icons.person),
             label: 'Konto',
@@ -41,10 +44,10 @@ class _FrameState extends State<Frame> {
         index: currentPageIndex,
         children: const [
           TransactionPage(),
+          QrPage(),
           AccountPage(),
           ],
       ),
     );
   }
 }
-
