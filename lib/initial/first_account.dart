@@ -1,9 +1,10 @@
 
 import 'package:flutter/material.dart';
+import 'package:qr_bar_code_scanner_dialog/qr_bar_code_scanner_dialog.dart';
 import 'package:sasmobile/initial/continue_account_setup.dart';
 import 'package:sasmobile/initial/verify_data.dart';
 var ValueAccount = "";
-
+var ControllerAccount = TextEditingController();
 class RegisterFirstAccount extends StatefulWidget {
   const RegisterFirstAccount({
     super.key,
@@ -24,7 +25,13 @@ class _RegisterFirstAccountState extends State<RegisterFirstAccount> {
             width: MediaQuery.sizeOf(context).width * 0.85,
             child: TextFieldAccount()
             ),
-          IconButton(iconSize:30, color: Color(0xFF2F537D), onPressed: (){}, icon: Icon(Icons.qr_code)),
+          IconButton(iconSize:30, color: Color(0xFF2F537D), onPressed: (){
+            QrBarCodeScannerDialog().getScannedQrBarCode(onCode: (code){
+              if(code!.substring(0,2) == "w:") {
+                ControllerAccount.text = code.substring(2, code.length);
+              } 
+            });
+          }, icon: Icon(Icons.qr_code)),
       
       
             
@@ -44,6 +51,7 @@ class TextFieldAccount extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextField(
+      controller: ControllerAccount,
       onChanged: (value) {
         ValueAccount = value;
         canContinue.value  = verifyFields();

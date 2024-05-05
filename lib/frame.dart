@@ -20,6 +20,13 @@ class _FrameState extends State<Frame> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Theme.of(context).bottomNavigationBarTheme.unselectedItemColor,
+        title: Text("SaS Pay", style: TextStyle(
+        fontFamily: 'Poppins',
+        fontWeight: FontWeight.bold,
+        
+      ),)),
       bottomNavigationBar: NavigationBar(
        onDestinationSelected: (int index) {
           setState(() {

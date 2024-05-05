@@ -17,7 +17,10 @@ class QrPage extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text("Code von $id:", style: TextStyle(fontSize: 30)),
+          Padding(
+            padding: const EdgeInsets.only(top: 10),
+            child: Text("Code von $id:", style: TextStyle(fontSize: 30)),
+          ),
           QrImageView(
           data: "m:$id",
           backgroundColor: Colors.white,
