@@ -15,6 +15,7 @@ class RegisterFirstAccount extends StatefulWidget {
 }
 
 class _RegisterFirstAccountState extends State<RegisterFirstAccount> {
+  final codescanner = QrBarCodeScannerDialog();
   @override
   Widget build(BuildContext context) {
     return  Padding(
@@ -26,7 +27,9 @@ class _RegisterFirstAccountState extends State<RegisterFirstAccount> {
             child: TextFieldAccount()
             ),
           IconButton(iconSize:30, color: Color(0xFF2F537D), onPressed: (){
-            QrBarCodeScannerDialog().getScannedQrBarCode(onCode: (code){
+           codescanner.getScannedQrBarCode(
+            context: context,
+            onCode: (code){
               if(code!.substring(0,2) == "w:") {
                 ControllerAccount.text = code.substring(2, code.length);
               } 
