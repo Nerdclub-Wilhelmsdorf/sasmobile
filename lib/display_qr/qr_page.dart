@@ -22,7 +22,7 @@ class QrPage extends StatelessWidget {
             child: Text("Code von $id:", style: TextStyle(fontSize: 30)),
           ),
           QrImageView(
-          data: "m:$id",
+          data: "w:$id",
           backgroundColor: Colors.white,
           version: QrVersions.auto,
           size: MediaQuery.sizeOf(context).width * 0.8,
