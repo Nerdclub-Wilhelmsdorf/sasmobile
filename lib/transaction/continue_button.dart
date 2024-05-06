@@ -1,11 +1,10 @@
 
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_local_authentication/flutter_local_authentication.dart';
-import 'package:flutter_local_authentication/localization_model.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:local_auth/local_auth.dart';
+import 'package:sasmobile/initial/first_account.dart';
 import 'package:sasmobile/main.dart';
 import 'package:sasmobile/transaction/amount.dart';
 import 'package:sasmobile/transaction/partner.dart';
@@ -42,27 +41,31 @@ class _ContinueButtonState extends State<ContinueButton> {
               isClickable() ? 
               () async {
                 if(transactionType.value == TransactionType.expense){
-                  final _flutterLocalAuthenticationPlugin = FlutterLocalAuthentication();
-                  final localization = LocalizationModel(
-                  promptDialogTitle: "Authentifizierung",
-                  promptDialogReason: "Authentifiziere dich, um eine Transaktion durchzuführen",
-                   cancelButtonTitle: "Abbrechen"
-                   );
-                  _flutterLocalAuthenticationPlugin.setLocalizationModel(localization);
-                  bool isAuthenticated = await authenticate(_flutterLocalAuthenticationPlugin);
-                  if(isAuthenticated) {
                    var response; 
                    if(hasTaxes.isFalse) {
-                   response = await pay(id,textPartner.value, double.parse(amountText.value) * 1.1, pin);
-                   
+                   print(response.data);
+                   final LocalAuthentication auth = LocalAuthentication();
+                   final bool canAuthenticateWithBiometrics = await auth.canCheckBiometrics;
+                   final bool canAuthenticate = canAuthenticateWithBiometrics || await auth.isDeviceSupported();
+                  if(!canAuthenticate){
+                    Get.snackbar("Fehler!", "Keine Authentifikationsmöglichkeit!");
+                    return;
+                  } 
+                  try {
+                     final bool didAuthenticate = await auth.authenticate(
+                    localizedReason: 'Authentifikation erforderlich');
+                    } on PlatformException {
+                      Get.snackbar("Fehler!", "Keine Authentifikation!");
+                      return;
+                    }
+                  response = await pay(id, ValueAccount, (double.parse(amountText.value) * 1.1).toString(), pin);
                    if(response.statusCode == 200) {
                     Get.snackbar("Erfolgreich bezahlt:", "Bezahlt: " + (double.parse(amountText.value) * 1.1).toString());
                    }
                    }
                   }
-                }
               }:
-              null,child: Text("Weiter", textScaler: TextScaler.linear(1.4),))),
+              null,child: const Text("Weiter", textScaler: TextScaler.linear(1.4),))),
           ),
         ],
       ),
