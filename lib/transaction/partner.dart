@@ -55,7 +55,7 @@ class TextFieldPartner extends StatelessWidget {
         textPartner.value = value;
       },
       controller: PartnerController,
-      decoration: InputDecoration( border: OutlineInputBorder(), suffixIcon: Icon(Icons.account_circle_outlined),  labelText: transactionType.value == TransactionType.expense ? 'Sender:' : 'Empfänger:'),));
+      decoration: InputDecoration( border: OutlineInputBorder(), suffixIcon: Icon(Icons.account_circle_outlined),  labelText: transactionType.value == TransactionType.expense ? 'Empfänger:' : 'Sender:'),));
     //TextField(decoration: InputDecoration( border: OutlineInputBorder(), suffixIcon: Icon(Icons.account_circle_outlined), labelText: transactionType.value == TransactionType.expense ? 'Sender:' : 'Empfänger:'),);
   }
 }

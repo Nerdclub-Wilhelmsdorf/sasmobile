@@ -1,20 +1,26 @@
 PODS:
+  - flutter_local_authentication (1.2.0):
+    - FlutterMacOS
   - FlutterMacOS (1.0.0)
   - path_provider_foundation (0.0.1):
     - Flutter
     - FlutterMacOS
 
 DEPENDENCIES:
+  - flutter_local_authentication (from `Flutter/ephemeral/.symlinks/plugins/flutter_local_authentication/macos`)
   - FlutterMacOS (from `Flutter/ephemeral`)
   - path_provider_foundation (from `Flutter/ephemeral/.symlinks/plugins/path_provider_foundation/darwin`)
 
 EXTERNAL SOURCES:
+  flutter_local_authentication:
+    :path: Flutter/ephemeral/.symlinks/plugins/flutter_local_authentication/macos
   FlutterMacOS:
     :path: Flutter/ephemeral
   path_provider_foundation:
     :path: Flutter/ephemeral/.symlinks/plugins/path_provider_foundation/darwin
 
 SPEC CHECKSUMS:
+  flutter_local_authentication: 85674893931e1c9cfa7c9e4f5973cb8c56b018b0
   FlutterMacOS: 8f6f14fa908a6fb3fba0cd85dbd81ec4b251fb24
   path_provider_foundation: 3784922295ac71e43754bd15e0653ccfd36a147c
 
