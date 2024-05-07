@@ -1,6 +1,8 @@
 
+import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:local_auth/local_auth.dart';
@@ -63,14 +65,30 @@ super.initState();
                   return;
                 }
                 if(transactionType.value == TransactionType.expense){
-                   var response; 
-                   if(hasTaxes.isFalse) {
-                  response = await pay(id, ValueAccount, (double.parse(amountText.value) * 1.1).toString(), pin);
-                   if(response.statusCode == 200) {
-                    Get.snackbar("Erfolgreich bezahlt:", "Bezahlt: " + (double.parse(amountText.value) * 1.1).toString());
-                   }
-                   }
+                   var response;
+                   var _payment;
+                  print(id + textPartner.value + amountText.value + pin);
+                  if(hasTaxes.isFalse){
+                    _payment = (Decimal.parse(amountText.value) * Decimal.parse("1.1")).toString();
+                  } else {
+                    _payment = (Decimal.parse(amountText.value) * Decimal.parse("1.1")).toString();
                   }
+                    response = await pay(id, textPartner.value,_payment, pin);
+                   if(response.statusCode == 200) {
+                    Get.snackbar("Erfolgreich bezahlt:", "Bezahlt: " + _payment + "D",
+
+                    icon: Icon(Icons.check_circle_outline_sharp, color: Colors.green, size: 40,)
+                    );  
+                  bool canVibrate = await Vibrate.canVibrate;
+                  if(canVibrate) {
+                    Vibrate.vibrate();
+                  }
+                   }else{
+                    Get.snackbar("Fehler!", "Keine Bezahlung möglich");
+                   }
+                   } else {
+
+                   }
               }:
               null,child: const Text("Weiter", textScaler: TextScaler.linear(1.4),))),
           ),
@@ -117,10 +135,10 @@ super.initState();
     try {
       setState(() {
         _isAuthenticating = true;
-        _authorized = 'Authenticating';
+        _authorized = 'Authentifizieren';
       });
       authenticated = await auth.authenticate(
-        localizedReason: 'Let OS determine authentication method',
+        localizedReason: 'Authentifiziere dich, um zu bezahlen',
         options: const AuthenticationOptions(
           stickyAuth: true,
         ),
@@ -191,9 +209,9 @@ super.initState();
 
 bool isClickable() {
   if((amountText.value != "")&&(textPartner.value != "")) {
-    var val = double.tryParse(amountText.value);
+    var val = Decimal.tryParse(amountText.value);
       if(val != null){
-        if(val != 0) {
+        if(val != Decimal.fromInt(0) && val > Decimal.fromInt(0)) {
           return true;
         }
       }
@@ -208,8 +226,8 @@ RxString calculateRecieval() {
   if (!withTax) {
     return (amountText.value + "D").obs;
   }else{
-    var amountDoub = double.parse(amountText.value);
-    return ((amountDoub - amountDoub * 0.1).toString() + "D").obs; 
+    var amountDoub = Decimal.parse(amountText.value);
+    return ((amountDoub - amountDoub * Decimal.parse("0.1")).toString() + "D").obs; 
   }
 }
 
@@ -219,8 +237,8 @@ RxString calculateToPay() {
     return ("").obs;
   }
   if (!withTax) {
-    var amountDoub = double.parse(amountText.value);
-    return ((amountDoub * 1.1).toString() + "D").obs;
+    var amountDoub = Decimal.parse(amountText.value);
+    return ((amountDoub * Decimal.parse("1.1")).toString() + "D").obs;
   }else{
     return (amountText.value + "D").obs; 
   }
