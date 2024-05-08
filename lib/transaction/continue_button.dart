@@ -99,8 +99,7 @@ class _ContinueButtonState extends State<ContinueButton> {
                                         Decimal.parse("1.1"))
                                     .toString();
                               } else {
-                                _payment = (Decimal.parse(amountText.value) *
-                                        Decimal.parse("1.1"))
+                                _payment = (Decimal.parse(amountText.value))
                                     .toString();
                               }
                               response = await pay(
@@ -122,8 +121,38 @@ class _ContinueButtonState extends State<ContinueButton> {
                                     "Fehler!", "Keine Bezahlung möglich");
                               }
                             } else {
+                              RxString __pin = "".obs;
                               Get.defaultDialog(
-                                  title: "PIN:", content: TextField());
+                                  title: "PIN:", content: Column(
+                                    children: [
+                                      TextField(
+                                        onChanged: (value) {
+                                          __pin.value = value;
+                                        },
+                                        obscureText: true,
+                                      ),
+                                      Obx(() => TextButton(onPressed: __pin.value.length == 4 && int.tryParse(__pin.value) != null ? () async {
+                                   var _payment;
+                                   var response;
+                                   if (hasTaxes.isFalse) {
+                                _payment = (Decimal.parse(amountText.value) *
+                                        Decimal.parse("1.1"))
+                                    .toString();
+                              } else {
+                                _payment = (Decimal.parse(amountText.value))
+                                    .toString();
+                              }
+                                      response = await pay(textPartner.value, id, _payment, __pin.value);
+                                      Get.back();
+                                      print(response.statusCode);
+                                      if(response.statusCode == 200){
+                                        Get.snackbar("Erfolgreich empfangen! ", "Bezahlt: " + _payment + "D", icon: Icon(Icons.check_circle_outline_sharp, color: Colors.green, size: 40,));
+                                      }else{
+                                        Get.snackbar("Fehler!", "Keine Bezahlung möglich");
+                                      }
+                                      } : null, child: Text("Weiter")))
+                                    ],
+                                  ));
                             }
                           }
                         : null,
