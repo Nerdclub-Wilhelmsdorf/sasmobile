@@ -3,7 +3,9 @@ import 'package:sasmobile/transaction/continue_button.dart';
 import 'package:sasmobile/transaction/partner.dart';
 import 'package:sasmobile/transaction/amount.dart';
 import 'package:sasmobile/transaction/toggle.dart';
+
 enum TransactionType { income, expense }
+
 class TransactionPage extends StatefulWidget {
   const TransactionPage({
     super.key,
@@ -14,7 +16,6 @@ class TransactionPage extends StatefulWidget {
 }
 
 class _TransactionPageState extends State<TransactionPage> {
-
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -30,15 +31,8 @@ class _TransactionPageState extends State<TransactionPage> {
           ContinueButton(),
           Spacer(),
           Toggle()
-          
-  ],
-         
-         ),
+        ],
+      ),
     );
   }
 }
-
-
-
-
-

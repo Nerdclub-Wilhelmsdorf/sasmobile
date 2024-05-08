@@ -5,8 +5,6 @@ import 'package:sasmobile/initial/first_account.dart';
 import 'package:sasmobile/initial/first_account_pin.dart';
 import 'package:sasmobile/initial/welcome_text.dart';
 
-
-
 class InitialScreen extends StatefulWidget {
   const InitialScreen({
     super.key,
@@ -21,29 +19,25 @@ class _InitialScreenState extends State<InitialScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SizedBox(
-        height: MediaQuery.sizeOf(context).height,
-        width: MediaQuery.sizeOf(context).width,
-        child: const Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
+          height: MediaQuery.sizeOf(context).height,
+          width: MediaQuery.sizeOf(context).width,
+          child: const Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
               WelcomeText(),
               RegisterFirstAccount(),
               FirstAccountPin(),
               Spacer(flex: 4),
               ContinueAccountSetup(),
               Spacer()
-          ],
-        )),
+            ],
+          )),
     );
   }
 }
-
-
-
 
 bool isInitialStart() {
   final box = GetStorage();
   return box.read("isInitial") == null;
 }
-

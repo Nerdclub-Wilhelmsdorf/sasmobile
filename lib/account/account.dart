@@ -12,8 +12,6 @@ class AccountPage extends StatefulWidget {
 class _AccountPageState extends State<AccountPage> {
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Text('Account Page')
-    );
+    return Center(child: Text('Account Page'));
   }
 }

@@ -13,22 +13,19 @@ class WelcomeText extends StatefulWidget {
 class _WelcomeTextState extends State<WelcomeText> {
   @override
   void initState() {
-   super.initState();
+    super.initState();
   }
-
 
   @override
   Widget build(BuildContext context) {
     return const Padding(
-      padding:  EdgeInsets.only(top: 40),
-      child:  FadeIn(
+      padding: EdgeInsets.only(top: 40),
+      child: FadeIn(
         duration: Duration(milliseconds: 250),
-        curve: Curves.easeIn,      
-        child: Text("Registrieren", 
-        style: TextStyle(
-          fontSize: 30,
-           fontWeight: FontWeight.bold
-        ),
+        curve: Curves.easeIn,
+        child: Text(
+          "Registrieren",
+          style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
         ),
       ),
     );

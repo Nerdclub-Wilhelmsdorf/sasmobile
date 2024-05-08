@@ -12,7 +12,7 @@ void registerAccount(name, _pin) {
   id = name;
 }
 
-List<String >getAccountData() {
+List<String> getAccountData() {
   final box = GetStorage();
   return [box.read("accountName"), box.read("accountPin")];
 }

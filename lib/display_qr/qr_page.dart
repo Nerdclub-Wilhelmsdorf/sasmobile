@@ -1,6 +1,4 @@
-
 // ignore_for_file: prefer_const_constructors
-
 
 import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
@@ -22,17 +20,14 @@ class QrPage extends StatelessWidget {
             child: Text("Code von $id:", style: TextStyle(fontSize: 30)),
           ),
           QrImageView(
-          data: "w:$id",
-          backgroundColor: Colors.white,
-          version: QrVersions.auto,
-          size: MediaQuery.sizeOf(context).width * 0.8,
-),
-
+            data: "w:$id",
+            backgroundColor: Colors.white,
+            version: QrVersions.auto,
+            size: MediaQuery.sizeOf(context).width * 0.8,
+          ),
           Spacer()
         ],
       ),
     );
-      
   }
 }
-

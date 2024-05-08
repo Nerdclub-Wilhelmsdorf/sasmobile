@@ -5,8 +5,7 @@ import 'package:sasmobile/initial/initial_screen.dart';
 import 'package:sasmobile/transaction/transaction.dart';
 
 class Frame extends StatefulWidget {
-
-   Frame({
+  Frame({
     super.key,
   });
 
@@ -21,14 +20,17 @@ class _FrameState extends State<Frame> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).bottomNavigationBarTheme.unselectedItemColor,
-        title: Text("SaS Pay", style: TextStyle(
-        fontFamily: 'Poppins',
-        fontWeight: FontWeight.bold,
-        
-      ),)),
+          backgroundColor:
+              Theme.of(context).bottomNavigationBarTheme.unselectedItemColor,
+          title: Text(
+            "SaS Pay",
+            style: TextStyle(
+              fontFamily: 'Poppins',
+              fontWeight: FontWeight.bold,
+            ),
+          )),
       bottomNavigationBar: NavigationBar(
-       onDestinationSelected: (int index) {
+        onDestinationSelected: (int index) {
           setState(() {
             currentPageIndex = index;
           });
@@ -44,8 +46,7 @@ class _FrameState extends State<Frame> {
             icon: Icon(Icons.person),
             label: 'Konto',
           ),
-        ],        
-
+        ],
       ),
       body: IndexedStack(
         index: currentPageIndex,
@@ -53,7 +54,7 @@ class _FrameState extends State<Frame> {
           TransactionPage(),
           QrPage(),
           AccountPage(),
-          ],
+        ],
       ),
     );
   }
