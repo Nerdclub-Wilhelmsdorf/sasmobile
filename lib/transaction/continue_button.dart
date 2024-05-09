@@ -28,18 +28,8 @@ var recieval = "".obs;
 
 class _ContinueButtonState extends State<ContinueButton> {
   final LocalAuthentication auth = LocalAuthentication();
-  SupportState _supportState = SupportState.unknown;
-  bool? _canCheckBiometrics;
-  List<BiometricType>? _availableBiometrics;
-  String _authorized = 'Not Authorized';
-  bool _isAuthenticating = false;
   @override
   void initState() {
-    super.initState();
-    auth.isDeviceSupported().then(
-          (bool isSupported) => setState(() => _supportState =
-              isSupported ? SupportState.supported : SupportState.unsupported),
-        );
     super.initState();
   }
 
@@ -58,15 +48,15 @@ class _ContinueButtonState extends State<ContinueButton> {
                 child: FilledButton(
                     onPressed: isClickable()
                         ? () async {
-                            if (transactionType.value == TransactionType.expense) {
+                            if (transactionType.value ==
+                                TransactionType.expense) {
                               bool didAuthenticate = false;
                               try {
-                                didAuthenticate =
-                                    await auth.authenticate(
-                                        localizedReason:
-                                            'Please authenticate to show account balance',
-                                        options: const AuthenticationOptions(
-                                            useErrorDialogs: false));
+                                didAuthenticate = await auth.authenticate(
+                                    localizedReason:
+                                        'Bitte Authentifiziere dich, um zu bezahlen.',
+                                    options: const AuthenticationOptions(
+                                        useErrorDialogs: false));
                                 // ···
                               } on PlatformException catch (e) {
                                 if (e.code == auth_error.notAvailable) {
@@ -83,9 +73,8 @@ class _ContinueButtonState extends State<ContinueButton> {
                                   return;
                                 }
                               }
-                              if(!didAuthenticate) {
-                                Get.snackbar(
-                                    "Fehler!", "Nicht Authorisiert.");
+                              if (!didAuthenticate) {
+                                Get.snackbar("Fehler!", "Nicht Authorisiert.");
                                 return;
                               }
                               var response;
@@ -123,7 +112,8 @@ class _ContinueButtonState extends State<ContinueButton> {
                             } else {
                               RxString __pin = "".obs;
                               Get.defaultDialog(
-                                  title: "PIN:", content: Column(
+                                  title: "PIN:",
+                                  content: Column(
                                     children: [
                                       TextField(
                                         onChanged: (value) {
@@ -131,26 +121,52 @@ class _ContinueButtonState extends State<ContinueButton> {
                                         },
                                         obscureText: true,
                                       ),
-                                      Obx(() => TextButton(onPressed: __pin.value.length == 4 && int.tryParse(__pin.value) != null ? () async {
-                                   var _payment;
-                                   var response;
-                                   if (hasTaxes.isFalse) {
-                                _payment = (Decimal.parse(amountText.value) *
-                                        Decimal.parse("1.1"))
-                                    .toString();
-                              } else {
-                                _payment = (Decimal.parse(amountText.value))
-                                    .toString();
-                              }
-                                      response = await pay(textPartner.value, id, _payment, __pin.value);
-                                      Get.back();
-                                      print(response.statusCode);
-                                      if(response.statusCode == 200){
-                                        Get.snackbar("Erfolgreich empfangen! ", "Bezahlt: " + _payment + "D", icon: Icon(Icons.check_circle_outline_sharp, color: Colors.green, size: 40,));
-                                      }else{
-                                        Get.snackbar("Fehler!", "Keine Bezahlung möglich");
-                                      }
-                                      } : null, child: Text("Weiter")))
+                                      Obx(() => TextButton(
+                                          onPressed: __pin.value.length == 4 &&
+                                                  int.tryParse(__pin.value) !=
+                                                      null
+                                              ? () async {
+                                                  var _payment;
+                                                  var response;
+                                                  if (hasTaxes.isFalse) {
+                                                    _payment = (Decimal.parse(
+                                                                amountText
+                                                                    .value) *
+                                                            Decimal.parse(
+                                                                "1.1"))
+                                                        .toString();
+                                                  } else {
+                                                    _payment = (Decimal.parse(
+                                                            amountText.value))
+                                                        .toString();
+                                                  }
+                                                  response = await pay(
+                                                      textPartner.value,
+                                                      id,
+                                                      _payment,
+                                                      __pin.value);
+                                                  Get.back();
+                                                  print(response.statusCode);
+                                                  if (response.statusCode ==
+                                                      200) {
+                                                    Get.snackbar(
+                                                        "Erfolgreich empfangen! ",
+                                                        "Bezahlt: " +
+                                                            _payment +
+                                                            "D",
+                                                        icon: Icon(
+                                                          Icons
+                                                              .check_circle_outline_sharp,
+                                                          color: Colors.green,
+                                                          size: 40,
+                                                        ));
+                                                  } else {
+                                                    Get.snackbar("Fehler!",
+                                                        "Keine Bezahlung möglich");
+                                                  }
+                                                }
+                                              : null,
+                                          child: Text("Weiter")))
                                     ],
                                   ));
                             }
@@ -165,122 +181,12 @@ class _ContinueButtonState extends State<ContinueButton> {
       ),
     );
   }
-
-  Future<void> _checkBiometrics() async {
-    late bool canCheckBiometrics;
-    try {
-      canCheckBiometrics = await auth.canCheckBiometrics;
-    } on PlatformException catch (e) {
-      canCheckBiometrics = false;
-      print(e);
-    }
-    if (!mounted) {
-      return;
-    }
-
-    setState(() {
-      _canCheckBiometrics = canCheckBiometrics;
-    });
-  }
-
-  Future<void> _getAvailableBiometrics() async {
-    late List<BiometricType> availableBiometrics;
-    try {
-      availableBiometrics = await auth.getAvailableBiometrics();
-    } on PlatformException catch (e) {
-      availableBiometrics = <BiometricType>[];
-      print(e);
-    }
-    if (!mounted) {
-      return;
-    }
-
-    setState(() {
-      _availableBiometrics = availableBiometrics;
-    });
-  }
-
-  Future<void> _authenticate() async {
-    bool authenticated = false;
-    try {
-      setState(() {
-        _isAuthenticating = true;
-        _authorized = 'Authentifizieren';
-      });
-      authenticated = await auth.authenticate(
-        localizedReason: 'Authentifiziere dich, um zu bezahlen',
-        options: const AuthenticationOptions(
-          stickyAuth: true,
-        ),
-      );
-      setState(() {
-        _isAuthenticating = false;
-      });
-    } on PlatformException catch (e) {
-      print(e);
-      setState(() {
-        _isAuthenticating = false;
-        _authorized = 'Error - ${e.message}';
-      });
-      return;
-    }
-    if (!mounted) {
-      return;
-    }
-    await _authenticate();
-    if (_authorized != "Authorized") {
-      Get.snackbar("Fehler!", "Nicht Authorisiert.");
-      return;
-    }
-
-    setState(
-        () => _authorized = authenticated ? 'Authorized' : 'Not Authorized');
-  }
-
-  Future<void> _authenticateWithBiometrics() async {
-    bool authenticated = false;
-    try {
-      setState(() {
-        _isAuthenticating = true;
-        _authorized = 'Authenticating';
-      });
-      authenticated = await auth.authenticate(
-        localizedReason:
-            'Scan your fingerprint (or face or whatever) to authenticate',
-        options: const AuthenticationOptions(
-          stickyAuth: true,
-          biometricOnly: true,
-        ),
-      );
-      setState(() {
-        _isAuthenticating = false;
-        _authorized = 'Authenticating';
-      });
-    } on PlatformException catch (e) {
-      print(e);
-      setState(() {
-        _isAuthenticating = false;
-        _authorized = 'Error - ${e.message}';
-      });
-      return;
-    }
-    if (!mounted) {
-      return;
-    }
-
-    final String message = authenticated ? 'Authorized' : 'Not Authorized';
-    setState(() {
-      _authorized = message;
-    });
-  }
-
-  Future<void> _cancelAuthentication() async {
-    await auth.stopAuthentication();
-    setState(() => _isAuthenticating = false);
-  }
 }
 
 bool isClickable() {
+  if (textPartner.value == id) {
+    return false;
+  }
   if ((amountText.value != "") && (textPartner.value != "")) {
     var val = Decimal.tryParse(amountText.value);
     if (val != null) {

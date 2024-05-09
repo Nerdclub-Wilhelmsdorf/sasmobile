@@ -2,13 +2,21 @@
 # See https://dart.dev/tools/pub/glossary#lockfile
 packages:
   async:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: async
       sha256: "947bfcf187f74dbc5e146c9eb9c0f10c9f8b30743e341481c1e2ed3ecc18c20c"
       url: "https://pub.dev"
     source: hosted
     version: "2.11.0"
+  auto_size_text:
+    dependency: "direct main"
+    description:
+      name: auto_size_text
+      sha256: "3f5261cd3fb5f2a9ab4e2fc3fba84fd9fcaac8821f20a1d4e71f557521b22599"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.0.0"
   boolean_selector:
     dependency: transitive
     description:
@@ -78,6 +86,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_exit_app:
+    dependency: "direct main"
+    description:
+      name: flutter_exit_app
+      sha256: a8dc0eafc095ffb04790fb39f49f22f3de4e0470112221094a716d5843a7add6
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.2"
   flutter_fadein:
     dependency: "direct main"
     description:
@@ -86,6 +102,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.0"
+  flutter_keychain:
+    dependency: "direct main"
+    description:
+      name: flutter_keychain
+      sha256: de6f2d09ce2a006013db799ad37d6ae49b10530d6841de1c0c0525c4d3ec22a4
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.4.0"
   flutter_lints:
     dependency: "direct dev"
     description:
@@ -200,6 +224,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.0"
+  loader:
+    dependency: "direct main"
+    description:
+      name: loader
+      sha256: "65848ea3bffb88766a2bd13cf68034b97a3d8cc34eb159daed5d4929135cef49"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.0"
   local_auth:
     dependency: "direct main"
     description:

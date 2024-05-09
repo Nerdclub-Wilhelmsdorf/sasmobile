@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:sasmobile/account/history.dart';
 import 'package:sasmobile/initial/initial_screen.dart';
 import 'package:sasmobile/routes.dart';
 import "package:sasmobile/theme.dart";
@@ -14,12 +17,18 @@ String pin = "";
 String id = "";
 void main() async {
   await GetStorage.init();
+  if (!isInitialStart()) {
+    var data = await getAccountData();
+    id = data[0];
+    pin = data[1];
+  }
+  Get.put(HistoryController());
   var canConnect = await ping();
   runApp(MainPage(hasConnection: canConnect));
 }
 
 class MainPage extends StatefulWidget {
-  final bool hasConnection; 
+  final bool hasConnection;
   const MainPage({Key? key, required this.hasConnection}) : super(key: key);
 
   @override
@@ -29,12 +38,6 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   @override
   void initState() {
-    if (!isInitialStart()) {
-      var data = getAccountData();
-      id = data[0];
-      pin = data[1];
-    }
-
     super.initState();
   }
 
@@ -43,7 +46,11 @@ class _MainPageState extends State<MainPage> {
     return GetMaterialApp(
       theme: const MaterialThemeCustom(TextTheme()).light(),
       darkTheme: const MaterialThemeCustom(TextTheme()).dark(),
-      initialRoute: !widget.hasConnection ? "/loading" : isInitialStart() ? "/login" : '/home',
+      initialRoute: !widget.hasConnection
+          ? "/loading"
+          : isInitialStart()
+              ? "/login"
+              : '/home',
       getPages: appRoutes(),
     );
   }

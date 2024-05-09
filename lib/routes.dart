@@ -14,7 +14,5 @@ appRoutes() => [
         name: '/login',
         page: () => const InitialScreen(),
       ),
-      GetPage(name: "/loading", page: 
-      () => LoginPage()
-      )
+      GetPage(name: "/loading", page: () => LoginPage())
     ];
