@@ -12,8 +12,10 @@ class Balance extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Obx(() => AutoSizeText(
+      
           "Kontostand: " + balance.value,
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
+          
+          style: TextStyle(fontWeight: FontWeight.bold),
         ));
   }
 }
