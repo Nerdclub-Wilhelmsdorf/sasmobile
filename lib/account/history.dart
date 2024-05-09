@@ -47,64 +47,41 @@ class History extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RefreshIndicator(
-      onRefresh: () async {
-        Get.find<HistoryController>().updateHistory();
-        await loadBalance();
-      },
-      child: ValueListenableBuilder<Future<List<dynamic>>>(
-        valueListenable: Get.find<HistoryController>().historyFutureNotifier,
-        builder:
-            (BuildContext context, Future<List<dynamic>> value, Widget? child) {
-          return FutureBuilder<List<dynamic>>(
-            future: value,
-            builder:
-                (BuildContext context, AsyncSnapshot<List<dynamic>> snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return Center(); // show a loading spinner while waiting
-              } else if (snapshot.hasError) {
-                return Text('Error: ${snapshot.error}');
-              } else {
-                return Padding(
-                  padding: const EdgeInsets.only(top: 5),
-                  child: ListView.builder(
-                    itemCount: (snapshot.data?.length ?? 0) +
-                        1, // Increase itemCount by 1
-                    itemBuilder: (BuildContext context, int index) {
-                      if (index < (snapshot.data?.length ?? 0)) {
-                        // If this is not the last item, return a TransactionEntry
-                        return TransactionEntry(
-                          index: index,
-                          transaction: snapshot.data?[index],
-                        );
-                      } else {
-                        // If this is the last item, return a button
-                        return ElevatedButton(
-                          onPressed: () {
-                            Get.defaultDialog(
-                                title: "App zurücksetzen?",
-                                middleText:
-                                    "Die PIN und ID des gespeicherten Kontos werden aus der App gelöscht.",
-                                confirm: TextButton(
-                                    onPressed: () {
-                                      Get.back();
-                                      reset();
-                                    },
-                                    child: Text("Bestätigen")));
-                          },
-                          child: Text(
-                            'App zurücksetzten',
-                          ),
-                        );
-                      }
-                    },
-                  ),
-                );
-              }
-            },
-          );
+        onRefresh: () async {
+          Get.find<HistoryController>().updateHistory();
+          await loadBalance();
         },
-      ),
-    );
+        child: ValueListenableBuilder<Future<List<dynamic>>>(
+            valueListenable:
+                Get.find<HistoryController>().historyFutureNotifier,
+            builder: (BuildContext context, Future<List<dynamic>> value,
+                Widget? child) {
+              return FutureBuilder<List<dynamic>>(
+                  future: value,
+                  builder: (BuildContext context,
+                      AsyncSnapshot<List<dynamic>> snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return Center(); // show a loading spinner while waiting
+                    } else if (snapshot.hasError) {
+                      return Text('Error: ${snapshot.error}');
+                    } else {
+                      return Padding(
+                          padding: const EdgeInsets.only(top: 5),
+                          child: ListView.builder(
+                              itemCount: (snapshot.data?.length ??
+                                  0), // Increase itemCount by 1
+                              itemBuilder: (BuildContext context, int index) {
+                                if (index < (snapshot.data?.length ?? 0)) {
+                                  // If this is not the last item, return a TransactionEntry
+                                  return TransactionEntry(
+                                    index: index,
+                                    transaction: snapshot.data?[index],
+                                  );
+                                }
+                              }));
+                    }
+                  });
+            }));
   }
 }
 

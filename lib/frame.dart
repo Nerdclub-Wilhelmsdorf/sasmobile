@@ -10,6 +10,7 @@ import 'package:sasmobile/account/history.dart';
 import 'package:sasmobile/display_qr/qr_page.dart';
 import 'package:local_auth/error_codes.dart' as auth_error;
 import 'package:sasmobile/transaction/transaction.dart';
+import 'package:sasmobile/utils/reset.dart';
 
 bool skipAuthentication = false;
 
@@ -22,24 +23,56 @@ class Frame extends StatefulWidget {
   State<Frame> createState() => _FrameState();
 }
 
+enum MenuIcons { resetsAccounts }
+
 class _FrameState extends State<Frame> {
   int currentPageIndex = 0;
-
+  MenuIcons? selectedItem;
   @override
   Widget build(BuildContext context) {
     return KeyboardDismisser(
       child: Scaffold(
         appBar: AppBar(
-            automaticallyImplyLeading: false,
-            backgroundColor:
-                Theme.of(context).bottomNavigationBarTheme.unselectedItemColor,
-            title: Text(
-              "SaS Pay",
-              style: TextStyle(
-                fontFamily: 'Poppins',
-                fontWeight: FontWeight.bold,
+          automaticallyImplyLeading: false,
+          backgroundColor:
+              Theme.of(context).bottomNavigationBarTheme.unselectedItemColor,
+          title: Row(
+            children: [
+              Text(
+                "SaS Pay",
+                style: TextStyle(
+                  fontFamily: 'Poppins',
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-            )),
+              Spacer(),
+              PopupMenuButton(
+                initialValue: selectedItem,
+                onSelected: (MenuIcons item) {
+                  setState(() {
+                    selectedItem = item;
+                    if (item == MenuIcons.resetsAccounts) {
+                      Get.defaultDialog(
+                          title: "App zurücksetzen",
+                          middleText:
+                              "Das Konto und die PIN werden vom Gerät entfernt.",
+                          confirm: TextButton(
+                              onPressed: () => reset(),
+                              child: Text("Bestätigen")));
+                    }
+                  });
+                },
+                itemBuilder: (BuildContext context) =>
+                    <PopupMenuEntry<MenuIcons>>[
+                  const PopupMenuItem<MenuIcons>(
+                    value: MenuIcons.resetsAccounts,
+                    child: Text('Konto zurücksetzten'),
+                  ),
+                ],
+              )
+            ],
+          ),
+        ),
         bottomNavigationBar: NavigationBar(
           onDestinationSelected: (int index) async {
             if (index == 2 && currentPageIndex != 2) {
