@@ -11,6 +11,8 @@ import 'package:sasmobile/display_qr/qr_page.dart';
 import 'package:local_auth/error_codes.dart' as auth_error;
 import 'package:sasmobile/transaction/transaction.dart';
 
+bool skipAuthentication = false;
+
 class Frame extends StatefulWidget {
   Frame({
     super.key,
@@ -49,8 +51,11 @@ class _FrameState extends State<Frame> {
               asyncGroup.close();
               await asyncGroup.future;
               Get.back();
-              if (!(await authenticateAccountPage())) {
-                return;
+              if (!skipAuthentication) {
+                if (!(await authenticateAccountPage())) {
+                  return;
+                }
+                enableSkip();
               }
             }
             setState(() {
@@ -110,4 +115,11 @@ authenticateAccountPage() async {
   } else {
     return true;
   }
+}
+
+enableSkip() async {
+  skipAuthentication = true;
+  await Future.delayed(const Duration(minutes: 15), () {
+    skipAuthentication = false;
+  });
 }
