@@ -22,6 +22,7 @@ class _FrameState extends State<Frame> {
     return KeyboardDismisser(
       child: Scaffold(
         appBar: AppBar(
+            automaticallyImplyLeading: false,
             backgroundColor:
                 Theme.of(context).bottomNavigationBarTheme.unselectedItemColor,
             title: Text(
