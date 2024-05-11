@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:get/get.dart';
+import 'package:get/get_connect/sockets/src/socket_notifier.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:local_auth/error_codes.dart' as auth_error;
@@ -51,6 +52,7 @@ class _ContinueButtonState extends State<ContinueButton> {
                             if (transactionType.value ==
                                 TransactionType.expense) {
                               bool didAuthenticate = false;
+
                               try {
                                 didAuthenticate = await auth.authenticate(
                                     localizedReason:
@@ -83,6 +85,7 @@ class _ContinueButtonState extends State<ContinueButton> {
                                   textPartner.value +
                                   amountText.value +
                                   pin);
+
                               if (hasTaxes.isFalse) {
                                 _payment = (Decimal.parse(amountText.value) *
                                         Decimal.parse("1.1"))
@@ -91,8 +94,12 @@ class _ContinueButtonState extends State<ContinueButton> {
                                 _payment = (Decimal.parse(amountText.value))
                                     .toString();
                               }
+                              Get.defaultDialog(
+                                  title: "Laden...",
+                                  content: CircularProgressIndicator());
                               response = await pay(
                                   id, textPartner.value, _payment, pin);
+                              Get.back();
                               if (response.statusCode == 200) {
                                 Get.snackbar("Erfolgreich bezahlt:",
                                     "Bezahlt: " + _payment + "D",
@@ -126,6 +133,10 @@ class _ContinueButtonState extends State<ContinueButton> {
                                                   int.tryParse(__pin.value) !=
                                                       null
                                               ? () async {
+                                                  Get.defaultDialog(
+                                                      title: "Laden...",
+                                                      content:
+                                                          CircularProgressIndicator());
                                                   var _payment;
                                                   var response;
                                                   if (hasTaxes.isFalse) {
@@ -149,6 +160,7 @@ class _ContinueButtonState extends State<ContinueButton> {
                                                   print(response.statusCode);
                                                   if (response.statusCode ==
                                                       200) {
+                                                    Get.back();
                                                     Get.snackbar(
                                                         "Erfolgreich empfangen! ",
                                                         "Bezahlt: " +
@@ -160,6 +172,13 @@ class _ContinueButtonState extends State<ContinueButton> {
                                                           color: Colors.green,
                                                           size: 40,
                                                         ));
+                                                    ();
+                                                    bool canVibrate =
+                                                        await Vibrate
+                                                            .canVibrate;
+                                                    if (canVibrate) {
+                                                      Vibrate.vibrate();
+                                                    }
                                                   } else {
                                                     Get.snackbar("Fehler!",
                                                         "Keine Bezahlung möglich");
