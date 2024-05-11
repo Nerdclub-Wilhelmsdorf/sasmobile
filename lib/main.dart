@@ -15,6 +15,11 @@ const url = "https://saswdorf.de:8443";
 const token = "test";
 String pin = "";
 String id = "";
+
+String version() {
+  return "0.0.1";
+}
+
 void main() async {
   await GetStorage.init();
   if (!isInitialStart()) {

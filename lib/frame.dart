@@ -11,6 +11,7 @@ import 'package:sasmobile/display_qr/qr_page.dart';
 import 'package:local_auth/error_codes.dart' as auth_error;
 import 'package:sasmobile/transaction/transaction.dart';
 import 'package:sasmobile/utils/reset.dart';
+import 'package:sasmobile/main.dart';
 
 bool skipAuthentication = false;
 
@@ -23,7 +24,7 @@ class Frame extends StatefulWidget {
   State<Frame> createState() => _FrameState();
 }
 
-enum MenuIcons { resetsAccounts }
+enum MenuIcons { resetsAccounts, Version }
 
 class _FrameState extends State<Frame> {
   int currentPageIndex = 0;
@@ -38,14 +39,14 @@ class _FrameState extends State<Frame> {
               Theme.of(context).bottomNavigationBarTheme.unselectedItemColor,
           title: Row(
             children: [
-              Text(
+              const Text(
                 "SaS Pay",
                 style: TextStyle(
                   fontFamily: 'Poppins',
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              Spacer(),
+              const Spacer(),
               PopupMenuButton(
                 initialValue: selectedItem,
                 onSelected: (MenuIcons item) {
@@ -58,7 +59,7 @@ class _FrameState extends State<Frame> {
                               "Das Konto und die PIN werden vom Gerät entfernt.",
                           confirm: TextButton(
                               onPressed: () => reset(),
-                              child: Text("Bestätigen")));
+                              child: const Text("Bestätigen")));
                     }
                   });
                 },
@@ -67,6 +68,10 @@ class _FrameState extends State<Frame> {
                   const PopupMenuItem<MenuIcons>(
                     value: MenuIcons.resetsAccounts,
                     child: Text('Konto zurücksetzten'),
+                  ),
+                  PopupMenuItem<MenuIcons>(
+                    value: MenuIcons.resetsAccounts,
+                    child: Text("Version: " + version()),
                   ),
                 ],
               )
