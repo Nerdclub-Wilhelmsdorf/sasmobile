@@ -41,15 +41,18 @@ class _AmountState extends State<Amount> {
                 ),
               )),
           SizedBox(
-            child: IconButton(
-                iconSize: 30,
-                color: Color(0xFF2F537D),
-                onPressed: () {
-                  withTax = !withTax;
+            child: Visibility(
+              visible: false,
+              child: IconButton(
+                  iconSize: 30,
+                  color: Color(0xFF2F537D),
+                  onPressed: () {
+                    withTax = !withTax;
 
-                  updateVals();
-                },
-                icon: Icon(Icons.swap_horizontal_circle_outlined)),
+                    updateVals();
+                  },
+                  icon: Icon(Icons.swap_horizontal_circle_outlined)),
+            ),
           )
         ],
       ),

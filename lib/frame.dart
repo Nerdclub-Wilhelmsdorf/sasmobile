@@ -70,7 +70,7 @@ class _FrameState extends State<Frame> {
                     child: Text('Konto zurücksetzten'),
                   ),
                   PopupMenuItem<MenuIcons>(
-                    value: MenuIcons.resetsAccounts,
+                    value: null,
                     child: Text("Version: " + version()),
                   ),
                 ],
