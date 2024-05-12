@@ -66,7 +66,7 @@ class _FrameState extends State<Frame> {
                 itemBuilder: (BuildContext context) =>
                     <PopupMenuEntry<MenuIcons>>[
                   const PopupMenuItem<MenuIcons>(
-                    value: MenuIcons.resetsAccounts,
+                    value: MenuIcons.Version,
                     child: Text('Konto zurücksetzten'),
                   ),
                   PopupMenuItem<MenuIcons>(
