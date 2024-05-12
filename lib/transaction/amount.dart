@@ -34,7 +34,7 @@ class _AmountState extends State<Amount> {
                   },
                   decoration: InputDecoration(
                       border: const OutlineInputBorder(),
-                      suffixIcon:const Icon(Icons.attach_money),
+                      suffixIcon: const Icon(Icons.attach_money),
                       labelText: hasTaxes.isTrue
                           ? 'Betrag (mit Steuer):'
                           : "Betrag (ohne Steuer):"),
@@ -44,14 +44,14 @@ class _AmountState extends State<Amount> {
             child: Visibility(
               visible: true,
               child: IconButton(
+                  hoverColor: Colors.transparent,
+                  highlightColor: Colors.transparent,
                   iconSize: 30,
-                  color: Color(0xFF2F537D),
+                  color: const Color(0xFF2F537D),
                   onPressed: () {
-                    withTax = !withTax;
-
-                    updateVals();
+                    Null;
                   },
-                  icon: Icon(null)),
+                  icon: const Icon(null)),
             ),
           )
         ],

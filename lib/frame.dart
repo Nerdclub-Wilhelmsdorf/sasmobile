@@ -16,7 +16,7 @@ import 'package:sasmobile/main.dart';
 bool skipAuthentication = false;
 
 class Frame extends StatefulWidget {
-  Frame({
+  const Frame({
     super.key,
   });
 
@@ -24,7 +24,7 @@ class Frame extends StatefulWidget {
   State<Frame> createState() => _FrameState();
 }
 
-enum MenuIcons { resetsAccounts, Version }
+enum MenuIcons { resetsAccounts, version }
 
 class _FrameState extends State<Frame> {
   int currentPageIndex = 0;
@@ -66,12 +66,12 @@ class _FrameState extends State<Frame> {
                 itemBuilder: (BuildContext context) =>
                     <PopupMenuEntry<MenuIcons>>[
                   const PopupMenuItem<MenuIcons>(
-                    value: MenuIcons.Version,
+                    value: MenuIcons.version,
                     child: Text('Konto zurücksetzten'),
                   ),
                   PopupMenuItem<MenuIcons>(
                     value: null,
-                    child: Text("Version: " + version()),
+                    child: Text("Version: ${version()}"),
                   ),
                 ],
               )
@@ -82,7 +82,8 @@ class _FrameState extends State<Frame> {
           onDestinationSelected: (int index) async {
             if (index == 2 && currentPageIndex != 2) {
               Get.defaultDialog(
-                  title: "Laden...", content: CircularProgressIndicator());
+                  title: "Laden...",
+                  content: const CircularProgressIndicator());
               final asyncGroup = FutureGroup();
               asyncGroup.add(loadBalance());
               asyncGroup.add(Get.find<HistoryController>().updateHistory());

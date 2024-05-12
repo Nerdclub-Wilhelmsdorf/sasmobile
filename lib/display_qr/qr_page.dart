@@ -1,7 +1,5 @@
 // ignore_for_file: prefer_const_constructors
-
 import 'package:flutter/material.dart';
-import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:sasmobile/main.dart';
 
@@ -18,10 +16,10 @@ class QrPage extends StatelessWidget {
         children: [
           Padding(
             padding: const EdgeInsets.only(top: 10),
-            child: Text("Code von ${id}:", style: TextStyle(fontSize: 30)),
+            child: Text("Code von $id:", style: TextStyle(fontSize: 30)),
           ),
           QrImageView(
-            data: "w:${id}",
+            data: "w:$id",
             backgroundColor: Colors.white,
             version: QrVersions.auto,
             size: MediaQuery.sizeOf(context).width * 0.8,

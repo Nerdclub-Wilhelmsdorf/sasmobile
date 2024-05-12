@@ -1,36 +1,28 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-import 'package:get/get_rx/src/rx_types/rx_types.dart';
-import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
-import 'package:get/get_state_manager/src/simple/get_controllers.dart';
-import 'package:sasmobile/account/account.dart';
 import 'package:sasmobile/account/balance.dart';
 import 'package:sasmobile/main.dart';
 import 'package:sasmobile/utils/get_history.dart';
-import 'package:sasmobile/utils/reset.dart';
 
 class HistoryController extends GetxController {
   final ValueNotifier<Future<List<dynamic>>> historyFutureNotifier =
       ValueNotifier(loadHistory());
 
   Future<void> updateHistory() async {
-    historyFutureNotifier.value = loadHistory();
-    historyFutureNotifier.notifyListeners(); // Notify listeners of the change
+    historyFutureNotifier.value =
+        loadHistory(); // Notify listeners of the change
   }
 
   static Future<List<dynamic>> loadHistory() async {
     var historyResponse = await getHistory();
     if (historyResponse.statusCode == 200) {
-      var _response = historyResponse.data!;
-      _response = _response.substring(2, _response.length - 2);
-      _response = _response.replaceAll('\\', "");
-      _response = _response.replaceAll("[", "");
+      var response = historyResponse.data!;
+      response = response.substring(2, response.length - 2);
+      response = response.replaceAll('\\', "");
+      response = response.replaceAll("[", "");
 
-      var responses =
-          _response.split("},{").map((item) => "{" + item + "}").toList();
+      var responses = response.split("},{").map((item) => "{$item}").toList();
       responses[0] = responses[0].substring(1, responses[0].length);
       responses.last = responses.last.substring(0, responses.last.length - 2);
       List<dynamic> jsonList =
@@ -44,6 +36,7 @@ class HistoryController extends GetxController {
 }
 
 class History extends StatelessWidget {
+  const History({super.key});
   @override
   Widget build(BuildContext context) {
     return RefreshIndicator(
@@ -61,7 +54,7 @@ class History extends StatelessWidget {
                   builder: (BuildContext context,
                       AsyncSnapshot<List<dynamic>> snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
-                      return Center(); // show a loading spinner while waiting
+                      return const Center(); // show a loading spinner while waiting
                     } else if (snapshot.hasError) {
                       return Text('Error: ${snapshot.error}');
                     } else {
@@ -78,6 +71,7 @@ class History extends StatelessWidget {
                                     transaction: snapshot.data?[index],
                                   );
                                 }
+                                return null;
                               }));
                     }
                   });
@@ -87,9 +81,10 @@ class History extends StatelessWidget {
 
 class TransactionEntry extends StatefulWidget {
   final int index;
+  // ignore: prefer_typing_uninitialized_variables
   final transaction;
-  TransactionEntry({Key? key, required this.index, required this.transaction})
-      : super(key: key);
+  const TransactionEntry(
+      {super.key, required this.index, required this.transaction});
   @override
   State<TransactionEntry> createState() => _TransactionEntryState();
 }
@@ -128,8 +123,8 @@ class _TransactionEntryState extends State<TransactionEntry> {
                     children: [
                       Text(
                         from == id ? to : from,
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                        textScaler: TextScaler.linear(1.3),
+                        style: const TextStyle(fontWeight: FontWeight.bold),
+                        textScaler: const TextScaler.linear(1.3),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 10.0),
@@ -138,13 +133,11 @@ class _TransactionEntryState extends State<TransactionEntry> {
                     ],
                   ),
                 ),
-                Spacer(),
+                const Spacer(),
                 Text(
-                  "${from == id ? "-" : "+"}" +
-                      widget.transaction["amount"] +
-                      "D",
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                  textScaler: TextScaler.linear(1.8),
+                  "${from == id ? "-" : "+"}, ${widget.transaction["amount"]} D",
+                  style: const TextStyle(fontWeight: FontWeight.bold),
+                  textScaler: const TextScaler.linear(1.8),
                 )
               ],
             )
@@ -156,13 +149,12 @@ class _TransactionEntryState extends State<TransactionEntry> {
 Future<List<dynamic>> loadHistory() async {
   var historyResponse = await getHistory();
   if (historyResponse.statusCode == 200) {
-    var _response = historyResponse.data!;
-    _response = _response.substring(2, _response.length - 2);
-    _response = _response.replaceAll('\\', "");
-    _response = _response.replaceAll("[", "");
+    var response = historyResponse.data!;
+    response = response.substring(2, response.length - 2);
+    response = response.replaceAll('\\', "");
+    response = response.replaceAll("[", "");
 
-    var responses =
-        _response.split("},{").map((item) => "{" + item + "}").toList();
+    var responses = response.split("},{").map((item) => "{ $item }").toList();
     responses[0] = responses[0].substring(1, responses[0].length);
     responses.last = responses.last.substring(0, responses.last.length - 2);
     List<dynamic> jsonList =

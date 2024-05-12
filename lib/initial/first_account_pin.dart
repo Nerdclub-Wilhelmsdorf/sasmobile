@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sasmobile/initial/continue_account_setup.dart';
 import 'package:sasmobile/initial/verify_data.dart';
 
-var ValueAccountPin = "";
+var valueaccountpin = "";
 
 class FirstAccountPin extends StatefulWidget {
   const FirstAccountPin({
@@ -33,7 +33,7 @@ class TextFieldAccount extends StatelessWidget {
     return TextField(
         obscureText: true,
         onChanged: (value) {
-          ValueAccountPin = value;
+          valueaccountpin = value;
           canContinue.value = verifyFields();
         },
         decoration: const InputDecoration(

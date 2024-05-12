@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sasmobile/initial/first_account.dart';
 import 'package:sasmobile/initial/first_account_pin.dart';
-import 'package:sasmobile/transaction/transaction.dart';
 import 'package:sasmobile/utils/register_account.dart';
 import 'package:sasmobile/utils/verify_account.dart';
 
@@ -21,19 +20,19 @@ class ContinueAccountSetup extends StatelessWidget {
         child: Obx(() => FilledButton(
             onPressed: canContinue.isTrue
                 ? () async {
-                    var response = await AccountVerificiation(
-                        ValueAccount, ValueAccountPin);
+                    var response = await accountverificiation(
+                        valueaccount, valueaccountpin);
                     if (response.data != "account verified") {
                       showFailedDialog(response);
                     } else {
-                      registerAccount(ValueAccount, ValueAccountPin);
+                      registerAccount(valueaccount, valueaccountpin);
                       Get.toNamed("/home");
                       Get.snackbar("Registrierung Erfolgreich!",
                           "Viel Spaß mit der App!");
                     }
                   }
                 : null,
-            child: Text(
+            child: const Text(
               "Weiter",
               style: TextStyle(fontSize: 18),
             ))));
@@ -41,7 +40,6 @@ class ContinueAccountSetup extends StatelessWidget {
 }
 
 void showFailedDialog(response) async {
-  print(response.data);
   switch (response.data) {
     case "account suspended":
       Get.defaultDialog(

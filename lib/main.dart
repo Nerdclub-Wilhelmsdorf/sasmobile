@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:sasmobile/account/history.dart';
 import 'package:sasmobile/initial/initial_screen.dart';
 import 'package:sasmobile/routes.dart';
 import "package:sasmobile/theme.dart";
-import 'package:sasmobile/utils/authenticate.dart';
 import 'package:sasmobile/utils/ping.dart';
 import 'package:sasmobile/utils/register_account.dart';
 
@@ -17,7 +14,7 @@ String pin = "";
 String id = "";
 
 String version() {
-  return "0.0.2";
+  return "0.0.3";
 }
 
 void main() async {
@@ -34,7 +31,7 @@ void main() async {
 
 class MainPage extends StatefulWidget {
   final bool hasConnection;
-  const MainPage({Key? key, required this.hasConnection}) : super(key: key);
+  const MainPage({super.key, required this.hasConnection});
 
   @override
   State<MainPage> createState() => _MainPageState();

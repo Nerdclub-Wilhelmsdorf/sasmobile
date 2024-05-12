@@ -36,7 +36,7 @@ class _ToggleState extends State<Toggle> {
           });
         },
         showSelectedIcon: false,
-        style: ButtonStyle(),
+        style: const ButtonStyle(),
       ),
     );
   }

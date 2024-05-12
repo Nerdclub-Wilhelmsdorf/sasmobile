@@ -15,7 +15,7 @@ class Partner extends StatefulWidget {
   State<Partner> createState() => _PartnerState();
 }
 
-var PartnerController = TextEditingController();
+var partnercontroller = TextEditingController();
 
 class _PartnerState extends State<Partner> {
   var codescanner = QrBarCodeScannerDialog();
@@ -29,22 +29,22 @@ class _PartnerState extends State<Partner> {
         children: [
           SizedBox(
               width: MediaQuery.sizeOf(context).width * 0.70,
-              child: TextFieldPartner()),
+              child: const TextFieldPartner()),
           SizedBox(
             child: IconButton(
                 iconSize: 30,
-                color: Color(0xFF2F537D),
+                color: const Color(0xFF2F537D),
                 onPressed: () {
                   codescanner.getScannedQrBarCode(
                       context: context,
                       onCode: (code) {
                         if (code!.substring(0, 2) == "w:") {
-                          PartnerController.text =
+                          partnercontroller.text =
                               code.substring(2, code.length);
                         }
                       });
                 },
-                icon: Icon(Icons.qr_code)),
+                icon: const Icon(Icons.qr_code)),
           )
         ],
       ),
@@ -63,10 +63,10 @@ class TextFieldPartner extends StatelessWidget {
           onChanged: (value) {
             textPartner.value = value;
           },
-          controller: PartnerController,
+          controller: partnercontroller,
           decoration: InputDecoration(
-              border: OutlineInputBorder(),
-              suffixIcon: Icon(Icons.account_circle_outlined),
+              border: const OutlineInputBorder(),
+              suffixIcon: const Icon(Icons.account_circle_outlined),
               labelText: transactionType.value == TransactionType.expense
                   ? 'Empfänger:'
                   : 'Sender:'),
