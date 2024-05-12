@@ -33,8 +33,8 @@ class _AmountState extends State<Amount> {
                     updateVals();
                   },
                   decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      suffixIcon: Icon(Icons.attach_money),
+                      border: const OutlineInputBorder(),
+                      suffixIcon:const Icon(Icons.attach_money),
                       labelText: hasTaxes.isTrue
                           ? 'Betrag (mit Steuer):'
                           : "Betrag (ohne Steuer):"),
@@ -42,7 +42,7 @@ class _AmountState extends State<Amount> {
               )),
           SizedBox(
             child: Visibility(
-              visible: false,
+              visible: true,
               child: IconButton(
                   iconSize: 30,
                   color: Color(0xFF2F537D),
@@ -51,7 +51,7 @@ class _AmountState extends State<Amount> {
 
                     updateVals();
                   },
-                  icon: Icon(Icons.swap_horizontal_circle_outlined)),
+                  icon: Icon(null)),
             ),
           )
         ],

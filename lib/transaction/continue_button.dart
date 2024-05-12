@@ -225,7 +225,7 @@ RxString calculateRecieval() {
     return (amountText.value + "D").obs;
   } else {
     var amountDoub = Decimal.parse(amountText.value);
-    return ((amountDoub - amountDoub * Decimal.parse("0.1")).toString() + "D")
+    return ((amountDoub / Decimal.parse("1.1")).toString() + "D")
         .obs;
   }
 }
