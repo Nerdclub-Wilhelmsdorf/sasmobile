@@ -12,7 +12,7 @@ class Balance extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Obx(() => AutoSizeText(
-          "Kontostand: $balance.value",
+          "Kontostand: ${balance.value}",
           style: const TextStyle(fontWeight: FontWeight.bold),
         ));
   }
@@ -21,8 +21,8 @@ class Balance extends StatelessWidget {
 Future<String> loadBalance() async {
   var balanceResponse = await getBalance();
   if (balanceResponse.statusCode == 200) {
-    balance.value = "${balanceResponse.data!} D";
-    return "${balanceResponse.data!} D";
+    balance.value = "${balanceResponse.data!}D";
+    return "${balanceResponse.data!}D";
   } else {
     return "";
   }

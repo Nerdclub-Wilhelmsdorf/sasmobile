@@ -38,7 +38,7 @@ class TextFieldAccount extends StatelessWidget {
         },
         decoration: const InputDecoration(
           border: OutlineInputBorder(),
-          suffixIcon: Icon(Icons.account_circle_outlined),
+          suffixIcon: Icon(Icons.pin),
           labelText: "PIN",
         ));
     //TextField(decoration: InputDecoration( border: OutlineInputBorder(), suffixIcon: Icon(Icons.account_circle_outlined), labelText: transactionType.value == TransactionType.expense ? 'Sender:' : 'Empfänger:'),);

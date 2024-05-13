@@ -135,7 +135,7 @@ class _TransactionEntryState extends State<TransactionEntry> {
                 ),
                 const Spacer(),
                 Text(
-                  "${from == id ? "-" : "+"}, ${widget.transaction["amount"]} D",
+                  "${from == id ? "-" : "+"}${widget.transaction["amount"]}D",
                   style: const TextStyle(fontWeight: FontWeight.bold),
                   textScaler: const TextScaler.linear(1.8),
                 )
