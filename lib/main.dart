@@ -14,7 +14,7 @@ String pin = "";
 String id = "";
 
 String version() {
-  return "0.0.4";
+  return "0.0.5";
 }
 
 void main() async {
