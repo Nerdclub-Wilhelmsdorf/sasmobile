@@ -1,8 +1,11 @@
+import 'dart:ffi';
+
 import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:local_auth/error_codes.dart' as auth_error;
 import 'package:sasmobile/main.dart';
@@ -93,7 +96,7 @@ class _ContinueButtonState extends State<ContinueButton> {
                                   title: "Laden...",
                                   content: const CircularProgressIndicator());
                               response = await pay(
-                                  id, textPartner.value, payment, pin);
+                                  id, textPartner.value, amountText.value, pin);
                               Get.back();
                               if (response.statusCode == 200) {
                                 Get.snackbar("Erfolgreich bezahlt:",
@@ -150,7 +153,7 @@ class _ContinueButtonState extends State<ContinueButton> {
                                                   response = await pay(
                                                       textPartner.value,
                                                       id,
-                                                      payment,
+                                                      amountText.value,
                                                       pin.value);
                                                   Get.back();
 
