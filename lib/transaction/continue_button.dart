@@ -99,8 +99,9 @@ class _ContinueButtonState extends State<ContinueButton> {
                                   id, textPartner.value, amountText.value, pin);
                               Get.back();
                               if (response.statusCode == 200) {
+                                clearTransactionFields();
                                 Get.snackbar("Erfolgreich bezahlt:",
-                                    "Bezahlt: $payment D",
+                                    "Bezahlt: ${payment}D",
                                     icon: const Icon(
                                       Icons.check_circle_outline_sharp,
                                       color: Colors.green,
@@ -111,8 +112,29 @@ class _ContinueButtonState extends State<ContinueButton> {
                                   Vibrate.vibrate();
                                 }
                               } else {
-                                Get.snackbar(
-                                    "Fehler!", "Keine Bezahlung möglich");
+                                print(response.data);
+                                if (response.data
+                                    .toString()
+                                    .contains("suspended")) {
+                                  Get.snackbar("Fehler!",
+                                      "Konto gesperrt! Versuchen Sie es später nocheinmal");
+                                  return;
+                                }
+
+                                if (response.data
+                                    .toString()
+                                    .contains("error no row")) {
+                                  Get.snackbar(
+                                      "Fehler!", "Nutzer existiert nicht");
+                                } else if (response.data
+                                    .toString()
+                                    .contains("insufficient funds")) {
+                                  Get.snackbar(
+                                      "Fehler!", "Nicht genügend Geld");
+                                } else {
+                                  Get.snackbar(
+                                      "Fehler!", "Keine Bezahlung möglich");
+                                }
                               }
                             } else {
                               RxString pin = "".obs;
@@ -155,11 +177,13 @@ class _ContinueButtonState extends State<ContinueButton> {
                                                       id,
                                                       amountText.value,
                                                       pin.value);
-                                                  Get.back();
+                                                  Get.back(closeOverlays: true);
 
                                                   if (response.statusCode ==
                                                       200) {
-                                                    Get.back();
+                                                    Get.back(
+                                                        closeOverlays: true);
+                                                    clearTransactionFields();
                                                     Get.snackbar(
                                                         "Erfolgreich empfangen! ",
                                                         "Bezahlt: $payment D",
@@ -177,8 +201,41 @@ class _ContinueButtonState extends State<ContinueButton> {
                                                       Vibrate.vibrate();
                                                     }
                                                   } else {
-                                                    Get.snackbar("Fehler!",
-                                                        "Keine Bezahlung möglich");
+                                                    Get.back(
+                                                        closeOverlays: true);
+                                                    print(response.data);
+                                                    if (response.data
+                                                        .toString()
+                                                        .contains(
+                                                            "suspended")) {
+                                                      Get.snackbar("Fehler!",
+                                                          "Konto gesperrt! Versuchen Sie es später nocheinmal");
+                                                      return;
+                                                    }
+                                                    if (response.data
+                                                        .toString()
+                                                        .contains(
+                                                            "wrong pin")) {
+                                                      Get.snackbar("Fehler!",
+                                                          "Falsche PIN");
+                                                      return;
+                                                    }
+                                                    if (response.data
+                                                        .toString()
+                                                        .contains(
+                                                            "error no row")) {
+                                                      Get.snackbar("Fehler!",
+                                                          "Nutzer existiert nicht");
+                                                    } else if (response.data
+                                                        .toString()
+                                                        .contains(
+                                                            "insufficient funds")) {
+                                                      Get.snackbar("Fehler!",
+                                                          "Nicht genügend Geld");
+                                                    } else {
+                                                      Get.snackbar("Fehler!",
+                                                          "Keine Bezahlung möglich");
+                                                    }
                                                   }
                                                 }
                                               : null,
@@ -238,4 +295,9 @@ RxString calculateToPay() {
   } else {
     return ("${amountText.value} D").obs;
   }
+}
+
+clearTransactionFields() {
+  AmountController.text = "";
+  partnercontroller.text = "";
 }
