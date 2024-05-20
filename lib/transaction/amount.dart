@@ -34,6 +34,7 @@ class _AmountState extends State<Amount> {
                     amountText.value = val;
                     updateVals();
                   },
+                  keyboardType: TextInputType.number,
                   decoration: InputDecoration(
                       border: const OutlineInputBorder(),
                       suffixIcon: const Icon(Icons.attach_money),

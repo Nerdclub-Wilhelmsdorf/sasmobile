@@ -143,6 +143,7 @@ class _ContinueButtonState extends State<ContinueButton> {
                                   content: Column(
                                     children: [
                                       TextField(
+                                        keyboardType: TextInputType.number,
                                         onChanged: (value) {
                                           pin.value = value;
                                         },

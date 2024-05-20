@@ -32,6 +32,7 @@ class TextFieldAccount extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextField(
         obscureText: true,
+        keyboardType: TextInputType.number,
         onChanged: (value) {
           valueaccountpin = value;
           canContinue.value = verifyFields();
