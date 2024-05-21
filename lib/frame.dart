@@ -9,6 +9,7 @@ import 'package:sasmobile/account/balance.dart';
 import 'package:sasmobile/account/history.dart';
 import 'package:sasmobile/display_qr/qr_page.dart';
 import 'package:local_auth/error_codes.dart' as auth_error;
+import 'package:sasmobile/no_internet/login_page.dart';
 import 'package:sasmobile/transaction/transaction.dart';
 import 'package:sasmobile/utils/reset.dart';
 import 'package:sasmobile/main.dart';
@@ -84,11 +85,17 @@ class _FrameState extends State<Frame> {
               Get.defaultDialog(
                   title: "Laden...",
                   content: const CircularProgressIndicator());
-              final asyncGroup = FutureGroup();
-              asyncGroup.add(loadBalance());
-              asyncGroup.add(Get.find<HistoryController>().updateHistory());
-              asyncGroup.close();
-              await asyncGroup.future;
+              try {
+                final asyncGroup = FutureGroup();
+                asyncGroup.add(loadBalance());
+                asyncGroup.add(Get.find<HistoryController>().updateHistory());
+                asyncGroup.close();
+                await asyncGroup.future;
+              } catch (e) {
+                stillActive = true;
+                Get.toNamed("/loading");
+              }
+
               Get.back();
               if (!skipAuthentication) {
                 if (!(await authenticateAccountPage())) {

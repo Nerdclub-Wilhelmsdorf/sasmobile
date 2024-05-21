@@ -14,11 +14,17 @@ class LoginPage extends StatefulWidget {
   State<LoginPage> createState() => _LoginPageState();
 }
 
+bool stillActive = true;
+
 class _LoginPageState extends State<LoginPage> {
   @override
   void initState() {
     const oneSec = Duration(seconds: 1);
-    Timer.periodic(oneSec, (Timer t) => checkConnection());
+    Timer.periodic(oneSec, (Timer t) {
+      if (stillActive) {
+        checkConnection();
+      }
+    });
     super.initState();
   }
 
@@ -52,5 +58,6 @@ void checkConnection() async {
   var hasConnection = await ping();
   if (hasConnection) {
     Get.toNamed(isInitialStart() ? "/login" : '/home');
+    stillActive = false;
   }
 }

@@ -18,7 +18,7 @@ class HistoryController extends GetxController {
     var historyResponse = await getHistory();
     if (historyResponse.statusCode == 200) {
       var response = historyResponse.data!;
-      response = response.substring(2, response.length - 2);
+      response = response.substring(2, response.length - 1);
       response = response.replaceAll('\\', "");
       response = response.replaceAll("[", "");
 
