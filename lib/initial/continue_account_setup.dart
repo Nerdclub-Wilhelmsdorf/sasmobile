@@ -29,6 +29,7 @@ class ContinueAccountSetup extends StatelessWidget {
 
                     var response = await accountverificiation(
                         valueaccount, valueaccountpin);
+                    Get.back();
                     if (response.data != "account verified") {
                       showFailedDialog(response);
                     } else {
