@@ -19,7 +19,11 @@ class Balance extends StatelessWidget {
 }
 
 Future<String> loadBalance() async {
-  var balanceResponse = await getBalance();
+  var balanceResponseResult = await getBalance();
+  if (balanceResponseResult.isFailure) {
+    return "";
+  }
+  var balanceResponse = balanceResponseResult.success;
   if (balanceResponse.statusCode == 200) {
     balance.value = "${balanceResponse.data!}D";
     return "${balanceResponse.data!}D";

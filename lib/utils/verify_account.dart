@@ -11,7 +11,7 @@ Future<Response<String>> accountverificiation(acc, pin) async {
     stillActive = true;
     Get.toNamed("/loading");
   }
-  Future<Response<String>> response = dio.post(url + "/verify",
+  Future<Response<String>> response = dio.post("$url/verify",
       data: {"name": acc, "pin": pin},
       options: Options(headers: {
         "Authorization": "Bearer $token",

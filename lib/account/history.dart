@@ -15,7 +15,11 @@ class HistoryController extends GetxController {
   }
 
   static Future<List<dynamic>> loadHistory() async {
-    var historyResponse = await getHistory();
+    var historyResponseResult = await getHistory();
+    if (historyResponseResult.isFailure) {
+      return [];
+    }
+    var historyResponse = historyResponseResult.success;
     if (historyResponse.statusCode == 200) {
       var response = historyResponse.data!;
       response = response.substring(2, response.length - 1);
@@ -147,7 +151,11 @@ class _TransactionEntryState extends State<TransactionEntry> {
 }
 
 Future<List<dynamic>> loadHistory() async {
-  var historyResponse = await getHistory();
+  var historyResponseResult = await getHistory();
+  if (historyResponseResult.isFailure) {
+    return [];
+  }
+  var historyResponse = historyResponseResult.success;
   if (historyResponse.statusCode == 200) {
     var response = historyResponse.data!;
     response = response.substring(2, response.length - 2);
