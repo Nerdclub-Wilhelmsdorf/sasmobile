@@ -187,7 +187,7 @@ class _ContinueButtonState extends State<ContinueButton> {
                                                     clearTransactionFields();
                                                     Get.snackbar(
                                                         "Erfolgreich empfangen! ",
-                                                        "Bezahlt: $payment D",
+                                                        "Bezahlt: ${payment}D",
                                                         icon: const Icon(
                                                           Icons
                                                               .check_circle_outline_sharp,
@@ -277,7 +277,7 @@ RxString calculateRecieval() {
     return "".obs;
   }
   if (!withTax) {
-    return ("${amountText.value} D").obs;
+    return ("${amountText.value}D").obs;
   } else {
     var amountDoub = Decimal.parse(amountText.value);
     var output = (amountDoub / Decimal.parse("1.1")).toString();
@@ -292,13 +292,16 @@ RxString calculateToPay() {
   if (!withTax) {
     var amountDoub = Decimal.parse(amountText.value);
     var output = (amountDoub * Decimal.parse("1.1")).toString();
-    return (("$output D").obs);
+    return (("${output}D").obs);
   } else {
-    return ("${amountText.value} D").obs;
+    return ("${amountText.value}D").obs;
   }
 }
 
 clearTransactionFields() {
   AmountController.text = "";
   partnercontroller.text = "";
+  amountText.value = "";
+  textPartner.value = "";
+  updateVals();
 }
