@@ -5,7 +5,7 @@ import 'package:sasmobile/transaction/continue_button.dart';
 bool withTax = false;
 RxBool hasTaxes = false.obs;
 RxString amountText = "".obs;
-TextEditingController AmountController = TextEditingController();
+TextEditingController amountcontroller = TextEditingController();
 
 class Amount extends StatefulWidget {
   const Amount({
@@ -29,7 +29,7 @@ class _AmountState extends State<Amount> {
               width: MediaQuery.sizeOf(context).width * 0.70,
               child: Obx(
                 () => TextField(
-                  controller: AmountController,
+                  controller: amountcontroller,
                   onChanged: (val) {
                     amountText.value = val;
                     updateVals();

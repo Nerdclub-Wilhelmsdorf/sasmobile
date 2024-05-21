@@ -20,6 +20,10 @@ class ContinueAccountSetup extends StatelessWidget {
         child: Obx(() => FilledButton(
             onPressed: canContinue.isTrue
                 ? () async {
+                    Get.defaultDialog(
+                        title: "Laden...",
+                        content: const CircularProgressIndicator());
+
                     var response = await accountverificiation(
                         valueaccount, valueaccountpin);
                     if (response.data != "account verified") {
