@@ -45,7 +45,7 @@ class _ContinueButtonState extends State<ContinueButton> {
                 height: MediaQuery.sizeOf(context).height * 0.07,
                 width: MediaQuery.sizeOf(context).width * 0.5,
                 child: FilledButton(
-                    onPressed: isClickable()
+                    onPressed: isClickable.isTrue
                         ? () async {
                             if (transactionType.value ==
                                 TransactionType.expense) {
@@ -91,6 +91,9 @@ class _ContinueButtonState extends State<ContinueButton> {
                               }
                               Get.defaultDialog(
                                   title: "Laden...",
+                                  onCancel: null,
+                                  barrierDismissible: false,
+                                  onWillPop: () => Future.value(false),
                                   content: const CircularProgressIndicator());
                               response = await pay(
                                   id, textPartner.value, amountText.value, pin);
@@ -152,6 +155,10 @@ class _ContinueButtonState extends State<ContinueButton> {
                                               ? () async {
                                                   Get.defaultDialog(
                                                       title: "Laden...",
+                                                      onCancel: null,
+                                                      barrierDismissible: false,
+                                                      onWillPop: () =>
+                                                          Future.value(false),
                                                       content:
                                                           const CircularProgressIndicator());
                                                   String payment;
@@ -174,12 +181,11 @@ class _ContinueButtonState extends State<ContinueButton> {
                                                       id,
                                                       amountText.value,
                                                       pin.value);
-                                                  Get.back(closeOverlays: true);
+                                                  Get.back();
 
                                                   if (response.statusCode ==
                                                       200) {
-                                                    Get.back(
-                                                        closeOverlays: true);
+                                                    Get.back();
                                                     clearTransactionFields();
                                                     Get.snackbar(
                                                         "Erfolgreich empfangen! ",
@@ -197,9 +203,9 @@ class _ContinueButtonState extends State<ContinueButton> {
                                                     if (canVibrate) {
                                                       Vibrate.vibrate();
                                                     }
+                                                    return;
                                                   } else {
-                                                    Get.back(
-                                                        closeOverlays: true);
+                                                    Get.back();
 
                                                     if (response.data
                                                         .toString()
@@ -253,23 +259,28 @@ class _ContinueButtonState extends State<ContinueButton> {
   }
 }
 
-bool isClickable() {
+RxBool isClickable = false.obs;
+void setIsClickable() {
   if (textPartner.value == id) {
-    return false;
+    isClickable.value = false;
+    return;
   }
   if ((amountText.value != "") && (textPartner.value != "")) {
     var val = Decimal.tryParse(amountText.value);
     if (val != null) {
       if (val != Decimal.fromInt(0) && val > Decimal.fromInt(0)) {
-        return true;
+        isClickable.value = true;
+        return;
       }
     }
   }
-  return false;
+  isClickable.value = false;
+  return;
 }
 
 RxString calculateRecieval() {
-  if (!isClickable()) {
+  setIsClickable();
+  if (isClickable.isFalse) {
     return "".obs;
   }
   if (!withTax) {
@@ -282,7 +293,8 @@ RxString calculateRecieval() {
 }
 
 RxString calculateToPay() {
-  if (!isClickable()) {
+  setIsClickable();
+  if (isClickable.isFalse) {
     return ("").obs;
   }
   if (!withTax) {

@@ -13,7 +13,6 @@ Future<Result<Response<String>, Exception>> getHistory() async {
         options: Options(headers: {
           "Authorization": "Bearer $token",
         }));
-    print(id + "ID - PIN" + pin);
     return Success(await response);
   } catch (e) {
     return Failure(Exception("error sending request"));

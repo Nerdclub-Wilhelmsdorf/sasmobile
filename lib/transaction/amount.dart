@@ -64,6 +64,8 @@ class _AmountState extends State<Amount> {
 }
 
 updateVals() {
+  setIsClickable();
+  isClickable.refresh();
   topay.value = calculateToPay().value;
   recieval.value = calculateRecieval().value;
   hasTaxes.value = withTax;

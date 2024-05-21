@@ -84,6 +84,9 @@ class _FrameState extends State<Frame> {
             if (index == 2 && currentPageIndex != 2) {
               Get.defaultDialog(
                   title: "Laden...",
+                  onCancel: null,
+                  barrierDismissible: false,
+                  onWillPop: () => Future.value(false),
                   content: const CircularProgressIndicator());
               try {
                 final asyncGroup = FutureGroup();

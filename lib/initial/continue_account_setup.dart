@@ -22,6 +22,9 @@ class ContinueAccountSetup extends StatelessWidget {
                 ? () async {
                     Get.defaultDialog(
                         title: "Laden...",
+                        onCancel: null,
+                        barrierDismissible: false,
+                        onWillPop: () => Future.value(false),
                         content: const CircularProgressIndicator());
 
                     var response = await accountverificiation(

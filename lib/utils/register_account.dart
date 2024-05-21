@@ -5,14 +5,14 @@ import 'package:flutter_keychain/flutter_keychain.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:sasmobile/main.dart';
 
-void registerAccount(name, pin) async {
-  pin = pin;
+void registerAccount(name, pinParameter) async {
+  pin = pinParameter;
   id = name;
 
   final box = GetStorage();
   box.write("isInitial", "false");
   await FlutterKeychain.put(key: "accountName", value: name);
-  await FlutterKeychain.put(key: "accountPin", value: pin);
+  await FlutterKeychain.put(key: "accountPin", value: pinParameter);
 }
 
 Future<List<dynamic>> getAccountData() async {

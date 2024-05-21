@@ -35,6 +35,8 @@ class _RegisterFirstAccountState extends State<RegisterFirstAccount> {
                     onCode: (code) {
                       if (code!.substring(0, 2) == "w:") {
                         controlleraccount.text = code.substring(2, code.length);
+                        valueaccount = code.substring(2, code.length);
+                        canContinue.value = verifyFields();
                       }
                     });
               },

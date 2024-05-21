@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import "package:get/get.dart";
 import "package:qr_bar_code_scanner_dialog/qr_bar_code_scanner_dialog.dart";
+import "package:sasmobile/transaction/amount.dart";
 import "package:sasmobile/transaction/toggle.dart";
 import "package:sasmobile/transaction/transaction.dart";
 
@@ -41,6 +42,8 @@ class _PartnerState extends State<Partner> {
                         if (code!.substring(0, 2) == "w:") {
                           partnercontroller.text =
                               code.substring(2, code.length);
+                          textPartner.value = code.substring(2, code.length);
+                          updateVals();
                         }
                       });
                 },
@@ -62,6 +65,7 @@ class TextFieldPartner extends StatelessWidget {
     return Obx(() => TextField(
           onChanged: (value) {
             textPartner.value = value;
+            updateVals();
           },
           controller: partnercontroller,
           decoration: InputDecoration(
