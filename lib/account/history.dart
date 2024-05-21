@@ -21,6 +21,9 @@ class HistoryController extends GetxController {
     }
     var historyResponse = historyResponseResult.success;
     if (historyResponse.statusCode == 200) {
+      if (historyResponse.data == '""') {
+        return [];
+      }
       var response = historyResponse.data!;
       response = response.substring(2, response.length - 1);
       response = response.replaceAll('\\', "");
