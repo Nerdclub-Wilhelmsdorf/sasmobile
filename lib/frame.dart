@@ -82,6 +82,7 @@ class _FrameState extends State<Frame> {
         bottomNavigationBar: NavigationBar(
           onDestinationSelected: (int index) async {
             if (index == 2 && currentPageIndex != 2) {
+              Get.closeAllSnackbars();
               Get.defaultDialog(
                   title: "Laden...",
                   onCancel: null,
@@ -99,7 +100,8 @@ class _FrameState extends State<Frame> {
                 Get.toNamed("/loading");
               }
 
-              closeAllOverlays();
+            //closeAllOverlays();
+            Get.back();
               if (!skipAuthentication) {
                 if (!(await authenticateAccountPage())) {
                   return;
@@ -171,16 +173,4 @@ enableSkip() async {
   await Future.delayed(const Duration(minutes: 15), () {
     skipAuthentication = false;
   });
-}
-
-Future<void> closeAllOverlays() async {
-    if (Get.isDialogOpen ?? false) {
-      Get.back();
-    }
-    if (Get.isBottomSheetOpen ?? false) {
-      Get.back();
-    }
-    if (Get.isSnackbarOpen) {
-      Get.back();
-    }
 }
