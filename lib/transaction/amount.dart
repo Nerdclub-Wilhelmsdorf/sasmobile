@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:sasmobile/transaction/continue_button.dart';
 
@@ -29,12 +30,25 @@ class _AmountState extends State<Amount> {
               width: MediaQuery.sizeOf(context).width * 0.70,
               child: Obx(
                 () => TextField(
+                   keyboardType:
+                          TextInputType.numberWithOptions(decimal: true),
+                      inputFormatters: <TextInputFormatter>[
+                        FilteringTextInputFormatter.allow(
+                            RegExp(r'[0-9]+[,.]{0,1}[0-9]*')),
+                        TextInputFormatter.withFunction(
+                          (oldValue, newValue) => newValue.copyWith(
+                            text: newValue.text.replaceAll(',', '.'),
+                          ),
+                        ),
+                      ],
                   controller: amountcontroller,
                   onChanged: (val) {
                     amountText.value = val;
+                    if(val.contains(",")){
+                      amountcontroller.text = amountcontroller.text.replaceAll(",", ".");
+                    }
                     updateVals();
                   },
-                  keyboardType: TextInputType.number,
                   decoration: InputDecoration(
                       border: const OutlineInputBorder(),
                       suffixIcon: const Icon(Icons.attach_money),
