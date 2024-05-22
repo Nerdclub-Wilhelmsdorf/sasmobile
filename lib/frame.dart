@@ -99,7 +99,7 @@ class _FrameState extends State<Frame> {
                 Get.toNamed("/loading");
               }
 
-              Get.back();
+              closeAllOverlays();
               if (!skipAuthentication) {
                 if (!(await authenticateAccountPage())) {
                   return;
@@ -171,4 +171,16 @@ enableSkip() async {
   await Future.delayed(const Duration(minutes: 15), () {
     skipAuthentication = false;
   });
+}
+
+Future<void> closeAllOverlays() async {
+    if (Get.isDialogOpen ?? false) {
+      Get.back();
+    }
+    if (Get.isBottomSheetOpen ?? false) {
+      Get.back();
+    }
+    if (Get.isSnackbarOpen) {
+      Get.back();
+    }
 }

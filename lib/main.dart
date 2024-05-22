@@ -9,14 +9,13 @@ import 'package:sasmobile/utils/ping.dart';
 import 'package:sasmobile/utils/register_account.dart';
 
 const url = "https://saswdorf.de:8443";
-const token = "test";
 String pin = "";
 String id = "";
+const token = "test";
 
 String version() {
   return "0.1.0";
 }
-
 void main() async {
   await GetStorage.init();
   if (!isInitialStart()) {
