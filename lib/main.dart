@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:sasmobile/account/history.dart';
@@ -25,6 +26,7 @@ void main() async {
   }
   Get.put(HistoryController());
   var canConnect = await ping();
+SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   runApp(MainPage(hasConnection: canConnect));
 }
 
