@@ -25,16 +25,17 @@ class HistoryController extends GetxController {
         return [];
       }
       var response = historyResponse.data!;
-      response = response.substring(2, response.length - 1);
-      response = response.replaceAll('\\', "");
-      response = response.replaceAll("[", "");
 
-      var responses = response.split("},{").map((item) => "{$item}").toList();
-      responses[0] = responses[0].substring(1, responses[0].length);
-      responses.last = responses.last.substring(0, responses.last.length - 2);
-      List<dynamic> jsonList =
-          responses.map((string) => jsonDecode(string)).toList();
+
+      List<String> responses = response.split("###");
+      responses.removeAt(0);
+      List<dynamic> jsonList = [];
+      responses.forEach((element) {
+        jsonList.add(jsonDecode(element) as Map<String, dynamic>);
+      });
+
       jsonList = jsonList.reversed.toList();
+      jsonList.forEach(print);
       return jsonList;
     } else {
       return [];
@@ -101,9 +102,8 @@ class _TransactionEntryState extends State<TransactionEntry> {
   late String to;
   @override
   void initState() {
-    from = widget.transaction["from"]
-        .substring(5, widget.transaction["from"].length);
-    to = widget.transaction["to"].substring(5, widget.transaction["to"].length);
+    from = widget.transaction["from"];
+    to = widget.transaction["to"];
     super.initState();
   }
 

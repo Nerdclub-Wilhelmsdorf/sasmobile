@@ -12,7 +12,7 @@ import 'package:sasmobile/utils/register_account.dart';
 const url = "https://saswdorf.de:8443";
 String pin = "";
 String id = "";
-const token = "test";
+const token = "W_97xyk8G]]w";
 
 String version() {
   return "0.1.0";

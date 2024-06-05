@@ -97,6 +97,7 @@ class _ContinueButtonState extends State<ContinueButton> {
                                   content: const CircularProgressIndicator());
                               response = await pay(
                                   id, textPartner.value, amountText.value, pin);
+                              print(response.data);
                               Get.back();
                               if (response.statusCode == 200) {
                                 clearTransactionFields();
@@ -182,6 +183,7 @@ class _ContinueButtonState extends State<ContinueButton> {
                                                       amountText.value,
                                                       pin.value);
                                                   Get.back();
+                                                  print(response.data);
 
                                                   if (response.statusCode ==
                                                       200) {
