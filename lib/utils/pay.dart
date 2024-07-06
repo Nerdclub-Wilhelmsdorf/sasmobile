@@ -12,7 +12,7 @@ Future<Response<String>> pay(from, to, amount, pin) async {
     Get.toNamed("/loading");
   }
   Future<Response<String>> response = dio.post("$url/pay",
-      data: {"from": from, "to": to, "amount": amount, "pin": pin},
+      data: {"from": from, "to": to, "amount": amount, "pin": pin, "purpose": ""},
       options: Options(headers: {
         "Authorization": "Bearer $token",
       }));
