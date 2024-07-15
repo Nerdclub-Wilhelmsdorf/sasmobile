@@ -41,7 +41,7 @@ class _FrameState extends State<Frame> {
           title: Row(
             children: [
               const Text(
-                "SaS Pay",
+                "Dörmany Pay",
                 style: TextStyle(
                   fontFamily: 'Poppins',
                   fontWeight: FontWeight.bold,

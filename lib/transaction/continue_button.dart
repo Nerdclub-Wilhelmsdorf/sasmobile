@@ -38,8 +38,8 @@ class _ContinueButtonState extends State<ContinueButton> {
       padding: const EdgeInsets.only(bottom: 40),
       child: Column(
         children: [
+          Obx(() => Text("Du bezahlst: ${topay.value}")),
           Obx(() => Text("Empfänger erhält: ${recieval.value}")),
-          Obx(() => Text("zu Bezahlen: ${topay.value}")),
           Obx(
             () => SizedBox(
                 height: MediaQuery.sizeOf(context).height * 0.07,
@@ -81,14 +81,9 @@ class _ContinueButtonState extends State<ContinueButton> {
                               var response;
                               String payment;
 
-                              if (hasTaxes.isFalse) {
-                                payment = (Decimal.parse(amountText.value) *
-                                        Decimal.parse("1.1"))
-                                    .toString();
-                              } else {
                                 payment = (Decimal.parse(amountText.value))
                                     .toString();
-                              }
+                      
                               Get.defaultDialog(
                                   title: "Laden...",
                                   onCancel: null,
@@ -166,12 +161,7 @@ class _ContinueButtonState extends State<ContinueButton> {
                                                   // ignore: prefer_typing_uninitialized_variables
                                                   var response;
                                                   if (hasTaxes.isFalse) {
-                                                    payment = (Decimal.parse(
-                                                                amountText
-                                                                    .value) *
-                                                            Decimal.parse(
-                                                                "1.1"))
-                                                        .toString();
+                                                    payment = amountText.value;
                                                   } else {
                                                     payment = (Decimal.parse(
                                                             amountText.value))
@@ -285,27 +275,20 @@ RxString calculateRecieval() {
   if (isClickable.isFalse) {
     return "".obs;
   }
-  if (!withTax) {
-    return ("${amountText.value}D").obs;
-  } else {
     var amountDoub = Decimal.parse(amountText.value);
-    var output = (amountDoub / Decimal.parse("1.1")).toString();
-    return (("$output D").obs);
+    var output = amountDoub - (amountDoub * Decimal.parse("0.1"));
+    return (("${output}D").obs);
   }
-}
+
 
 RxString calculateToPay() {
   setIsClickable();
   if (isClickable.isFalse) {
     return ("").obs;
   }
-  if (!withTax) {
-    var amountDoub = Decimal.parse(amountText.value);
-    var output = (amountDoub * Decimal.parse("1.1")).toString();
-    return (("${output}D").obs);
-  } else {
+
     return ("${amountText.value}D").obs;
-  }
+
 }
 
 clearTransactionFields() {

@@ -9,7 +9,7 @@ import "package:sasmobile/theme.dart";
 import 'package:sasmobile/utils/ping.dart';
 import 'package:sasmobile/utils/register_account.dart';
 
-const url = "https://saswdorf.de:8443";
+const url = "https://banking.saswdorf.de";
 String pin = "";
 String id = "";
 const token = "W_97xyk8G]]w";
