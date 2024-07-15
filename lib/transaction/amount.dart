@@ -52,9 +52,7 @@ class _AmountState extends State<Amount> {
                   decoration: InputDecoration(
                       border: const OutlineInputBorder(),
                       suffixIcon: const Icon(Icons.attach_money),
-                      labelText: hasTaxes.isTrue
-                          ? 'Betrag (mit Steuer):'
-                          : "Betrag (ohne Steuer):"),
+                      labelText: "Betrag"),
                 ),
               )),
           SizedBox(
