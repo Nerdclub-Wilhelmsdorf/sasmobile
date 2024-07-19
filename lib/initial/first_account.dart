@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:qr_bar_code_scanner_dialog/qr_bar_code_scanner_dialog.dart';
 import 'package:sasmobile/initial/continue_account_setup.dart';
 import 'package:sasmobile/initial/verify_data.dart';
+import 'package:sasmobile/transaction/amount.dart';
 
 var valueaccount = "";
 var controlleraccount = TextEditingController();
@@ -36,6 +37,13 @@ class _RegisterFirstAccountState extends State<RegisterFirstAccount> {
                       if (code!.substring(0, 2) == "w:") {
                         controlleraccount.text = code.substring(2, code.length);
                         valueaccount = code.substring(2, code.length);
+                        canContinue.value = verifyFields();
+                      }
+                      if (code.substring(0, 2) == "k:") {
+                        var cleanCode = code.substring(2, code.length);
+                        var splitCode = cleanCode.split(";");
+                        controlleraccount.text = splitCode[0];
+                        amountcontroller.text = splitCode[0];
                         canContinue.value = verifyFields();
                       }
                     });
