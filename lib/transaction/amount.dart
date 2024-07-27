@@ -28,8 +28,7 @@ class _AmountState extends State<Amount> {
         children: [
           SizedBox(
               width: MediaQuery.sizeOf(context).width * 0.70,
-              child: Obx(
-                () => TextField(
+              child: TextField(
                    keyboardType:
                           TextInputType.numberWithOptions(decimal: true),
                       inputFormatters: <TextInputFormatter>[
@@ -38,8 +37,7 @@ class _AmountState extends State<Amount> {
                         TextInputFormatter.withFunction(
                           (oldValue, newValue) => newValue.copyWith(
                             text: newValue.text.replaceAll(',', '.'),
-                          ),
-                        ),
+                          ))
                       ],
                   controller: amountcontroller,
                   onChanged: (val) {
@@ -54,7 +52,7 @@ class _AmountState extends State<Amount> {
                       suffixIcon: const Icon(Icons.attach_money),
                       labelText: "Betrag"),
                 ),
-              )),
+              ),
           SizedBox(
             child: Visibility(
               visible: true,

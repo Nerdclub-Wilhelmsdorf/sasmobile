@@ -38,7 +38,7 @@ class _ContinueButtonState extends State<ContinueButton> {
       padding: const EdgeInsets.only(bottom: 40),
       child: Column(
         children: [
-          Obx(() => Text("Du bezahlst: ${topay.value}")),
+          Obx(() => Text("Sender bezahlt: ${topay.value}")),
           Obx(() => Text("Empfänger erhält: ${recieval.value}")),
           Obx(
             () => SizedBox(
