@@ -362,6 +362,7 @@ class MaterialThemeCustom {
   }
 
   ThemeData theme(ColorScheme colorScheme) => ThemeData(
+        fontFamily: "Poppins",
         useMaterial3: true,
         brightness: colorScheme.brightness,
         colorScheme: colorScheme,

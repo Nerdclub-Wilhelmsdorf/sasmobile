@@ -58,3 +58,13 @@ flutter_launcher_icons:
   remove_alpha_ios: true
   image_path_ios: "resources/icon_ios.png"
   adaptive_icon_background: "#ffffff"
+
+fonts:
+    - family: Poppins
+      fonts:
+        - asset: assets/fonts/Poppins-Light.ttf
+          weight: 100
+        - asset: assets/fonts/Poppins-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/Poppins-Bold.ttf
+          weight: 600

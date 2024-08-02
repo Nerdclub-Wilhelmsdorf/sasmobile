@@ -15,7 +15,7 @@ String id = "";
 const token = "W_97xyk8G]]w";
 
 String version() {
-  return "0.1.0";
+  return "0.2.0";
 }
 void main() async {
   await GetStorage.init();
