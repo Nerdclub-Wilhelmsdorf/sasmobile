@@ -1,11 +1,11 @@
 import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:get/get.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:local_auth/error_codes.dart' as auth_error;
 import 'package:sasmobile/main.dart';
+import 'package:vibration/vibration.dart';
 import 'package:sasmobile/transaction/amount.dart';
 import 'package:sasmobile/transaction/partner.dart';
 import 'package:sasmobile/transaction/toggle.dart';
@@ -103,9 +103,9 @@ class _ContinueButtonState extends State<ContinueButton> {
                                       color: Colors.green,
                                       size: 40,
                                     ));
-                                bool canVibrate = await Vibrate.canVibrate;
-                                if (canVibrate) {
-                                  Vibrate.vibrate();
+                                bool? canVibrate = await Vibration.hasVibrator();
+                                if (canVibrate != null && canVibrate) {
+                                  Vibration.vibrate();
                                 }
                               } else {
                                 if (response.data
@@ -189,11 +189,11 @@ class _ContinueButtonState extends State<ContinueButton> {
                                                           size: 40,
                                                         ));
                                                     ();
-                                                    bool canVibrate =
-                                                        await Vibrate
-                                                            .canVibrate;
-                                                    if (canVibrate) {
-                                                      Vibrate.vibrate();
+                                                    bool? canVibrate =
+                                                        await Vibration.hasVibrator();
+                                                    if (canVibrate != null &&
+                                                        canVibrate) {
+                                                      Vibration.vibrate();
                                                     }
                                                     return;
                                                   } else {
