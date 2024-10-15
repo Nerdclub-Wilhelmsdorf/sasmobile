@@ -19,7 +19,6 @@ String version() {
   return "0.2.0";
 }
 void main() async {
-  await FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SECURE);
   await GetStorage.init();
   if (!isInitialStart()) {
     var data = await getAccountData();
