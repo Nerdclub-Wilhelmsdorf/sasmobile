@@ -27,6 +27,7 @@ dependencies:
   result_type: ^0.2.0
   flutter_launcher_icons: "^0.13.1"
   vibration: ^2.0.1
+  flutter_windowmanager: ^0.2.0
 
 dev_dependencies:
   flutter_test:

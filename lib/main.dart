@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_windowmanager/flutter_windowmanager.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:sasmobile/account/history.dart';
@@ -18,6 +19,7 @@ String version() {
   return "0.2.0";
 }
 void main() async {
+  await FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SECURE);
   await GetStorage.init();
   if (!isInitialStart()) {
     var data = await getAccountData();
@@ -40,7 +42,7 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   @override
-  void initState() {
+  void initState()  {
     super.initState();
   }
 
