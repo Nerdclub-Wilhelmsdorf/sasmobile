@@ -6,6 +6,7 @@ import 'package:sasmobile/account/history.dart';
 import 'package:sasmobile/initial/initial_screen.dart';
 import 'package:sasmobile/routes.dart';
 import "package:sasmobile/theme.dart";
+import 'package:sasmobile/utils/disable_screenshot.dart';
 import 'package:sasmobile/utils/ping.dart';
 import 'package:sasmobile/utils/register_account.dart';
 
@@ -15,9 +16,10 @@ String id = "";
 const token = "W_97xyk8G]]w";
 
 String version() {
-  return "0.2.0";
+  return "0.2.1";
 }
 void main() async {
+  disableScreenshot();
   await GetStorage.init();
   if (!isInitialStart()) {
     var data = await getAccountData();
