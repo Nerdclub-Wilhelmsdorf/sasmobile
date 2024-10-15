@@ -19,7 +19,6 @@ String version() {
   return "0.2.1";
 }
 void main() async {
-  disableScreenshot();
   await GetStorage.init();
   if (!isInitialStart()) {
     var data = await getAccountData();
@@ -43,6 +42,7 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   @override
   void initState()  {
+    disableScreenshot();
     super.initState();
   }
 

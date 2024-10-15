@@ -138,12 +138,14 @@ class _ContinueButtonState extends State<ContinueButton> {
                                   content: Column(
                                     children: [
                                       TextField(
-                                        keyboardType: TextInputType.number,
+                                        readOnly: true,
                                         onChanged: (value) {
                                           pin.value = value;
                                         },
                                         obscureText: true,
                                       ),
+                                  
+                                  
                                       Obx(() => TextButton(
                                           onPressed: pin.value.length == 4 &&
                                                   int.tryParse(pin.value) !=
