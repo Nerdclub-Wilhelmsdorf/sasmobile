@@ -20,7 +20,7 @@ class TextFieldNumber extends StatelessWidget {
       onPressed: () {
         pin.value = pin.value + text!;
         pincontroller.text = pin.value;
-    }, child: Text(this.text ?? ''));
+    }, child: Text(this.text ?? '', textScaler: TextScaler.linear(1.3),));
   }
 }
 
@@ -31,12 +31,12 @@ class Remove extends StatelessWidget {
     return TextButton(
       
       onPressed: () {
-        if (pin.value.length == 0){
+        if (pin.value.isEmpty){
           return;
         }
         pin.value = pin.value.substring(0, pin.value.length - 1);
         pincontroller.text = pin.value;
-    }, child:const  Text("←", style: TextStyle(color:  Color.fromARGB(255, 187, 74, 74))));
+    }, child:const  Text("←", textScaler: TextScaler.linear(1.3), style: TextStyle(color:  Color.fromARGB(255, 187, 74, 74))));
   }
 }
 class Clear extends StatelessWidget {
@@ -48,6 +48,6 @@ class Clear extends StatelessWidget {
       onPressed: () {
         pin.value = "";
         pincontroller.text = pin.value;
-    }, child: const Text("C", style: TextStyle(color:  Color.fromARGB(255, 187, 74, 74) )));
+    }, child: const Text("C", textScaler: TextScaler.linear(1.3), style: TextStyle(color:  Color.fromARGB(255, 187, 74, 74) )));
   }
 }
