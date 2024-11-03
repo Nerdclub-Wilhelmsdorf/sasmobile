@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:local_auth/error_codes.dart' as auth_error;
 import 'package:sasmobile/main.dart';
+import 'package:sasmobile/transaction/pin_input_field.dart';
 import 'package:vibration/vibration.dart';
 import 'package:sasmobile/transaction/amount.dart';
 import 'package:sasmobile/transaction/partner.dart';
@@ -24,7 +25,8 @@ class ContinueButton extends StatefulWidget {
 
 var topay = "".obs;
 var recieval = "".obs;
-
+var pincontroller = TextEditingController();
+RxString pin = "".obs;
 class _ContinueButtonState extends State<ContinueButton> {
   final LocalAuthentication auth = LocalAuthentication();
   @override
@@ -132,7 +134,7 @@ class _ContinueButtonState extends State<ContinueButton> {
                                 }
                               }
                             } else {
-                              RxString pin = "".obs;
+
                               Get.defaultDialog(
                                   title: "PIN:",
                                   content: Column(
@@ -142,9 +144,46 @@ class _ContinueButtonState extends State<ContinueButton> {
                                         onChanged: (value) {
                                           pin.value = value;
                                         },
+                                        controller: pincontroller,
                                         obscureText: true,
+                                        textAlign: TextAlign.center,
                                       ),
-                                  
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                        children: [
+                                          TextFieldNumber(text: "1"),
+                                          TextFieldNumber(text: "2"),
+                                          TextFieldNumber(text: "3"),
+                                        ],
+                                      ),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                        children: [
+                                          TextFieldNumber(text: "4"),
+                                          TextFieldNumber(text: "5"),
+                                          TextFieldNumber(text: "6"),
+                                        ],
+                                      ),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                        children: [
+                                          TextFieldNumber(text: "7"),
+                                          TextFieldNumber(text: "8"),
+                                          TextFieldNumber(text: "9"),
+                                        ],
+                                      ),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                        children: [
+                                          Clear(),
+                                          TextFieldNumber(text: "0"),
+                                          Remove(),
+                                        ],
+                                      ),
                                   
                                       Obx(() => TextButton(
                                           onPressed: pin.value.length == 4 &&
@@ -176,7 +215,8 @@ class _ContinueButtonState extends State<ContinueButton> {
                                                       pin.value);
                                                   Get.back();
                                                   print(response.data);
-
+                                                  pincontroller.text = "";
+                                                  pin.value = "";
                                                   if (response.statusCode ==
                                                       200) {
                                                     Get.back();
@@ -252,6 +292,7 @@ class _ContinueButtonState extends State<ContinueButton> {
     );
   }
 }
+
 
 RxBool isClickable = false.obs;
 void setIsClickable() {

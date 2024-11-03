@@ -1,0 +1,1 @@
+fvm flutter config --jdk-dir=/usr/lib/jvm/java-17-openjdk-17.0.13.0.11-1.fc41.x86_64/
